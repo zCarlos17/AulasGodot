@@ -82,8 +82,8 @@
 [ext_resource type="Texture2D" uid="uid://cni74eo3p1mgq" path="res://Sprites/Player/Sprites/HeroKnight/Run/HeroKnight_Run_8.png" id="80_a1mwt"]
 [ext_resource type="Texture2D" uid="uid://ce3y2omnapm8u" path="res://Sprites/Player/Sprites/HeroKnight/Run/HeroKnight_Run_9.png" id="81_7rvty"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
-size = Vector2(23.636364, 37.272728)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h5cax"]
+height = 34.545456
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6t5aa"]
 animations = [{
@@ -406,12 +406,14 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D" unique_id=1640374179]
+collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_v0iea")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=532109296]
-position = Vector2(-1.9999993, 5.4999995)
+position = Vector2(0, 8)
 scale = Vector2(1.1, 1.1)
-shape = SubResource("RectangleShape2D_cvnsp")
+shape = SubResource("CapsuleShape2D_h5cax")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=900714674]
 sprite_frames = SubResource("SpriteFrames_6t5aa")

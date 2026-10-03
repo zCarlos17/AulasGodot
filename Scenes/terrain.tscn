@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://d3ipn024v6ehn"]
+
+[ext_resource type="TileSet" uid="uid://dtvx3ari0djxa" path="res://Sprites/TileSets/terrain1.tres" id="1_g24sy"]
+
+[node name="Terrain" type="Node2D" unique_id=1720062427]
+
+[node name="Terrain" type="TileMapLayer" parent="." unique_id=883041594]
+tile_set = ExtResource("1_g24sy")
