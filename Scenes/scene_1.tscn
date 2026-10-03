@@ -1,3 +1,33 @@
 [gd_scene format=3 uid="uid://dru20yefivho1"]
 
+[ext_resource type="PackedScene" uid="uid://cr110xyomgn6r" path="res://Scenes/player.tscn" id="1_23sq3"]
+[ext_resource type="PackedScene" uid="uid://cw42slnsof148" path="res://Scenes/camera_2d.tscn" id="1_n8be1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_23sq3"]
+size = Vector2(195.25, 62)
+
 [node name="Scene1" type="Node2D" unique_id=671332662]
+
+[node name="CameraP" parent="." unique_id=1371694772 node_paths=PackedStringArray("alvo") instance=ExtResource("1_n8be1")]
+alvo = NodePath("../Player")
+
+[node name="Player" parent="." unique_id=1640374179 instance=ExtResource("1_23sq3")]
+position = Vector2(65, 24)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=144095523]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=283424368]
+position = Vector2(100, 291)
+shape = SubResource("RectangleShape2D_23sq3")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D" unique_id=2057256032]
+position = Vector2(324, 292)
+shape = SubResource("RectangleShape2D_23sq3")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D" unique_id=1054448699]
+position = Vector2(545, 258)
+shape = SubResource("RectangleShape2D_23sq3")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D" unique_id=391792752]
+position = Vector2(785, 199)
+shape = SubResource("RectangleShape2D_23sq3")
