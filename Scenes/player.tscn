@@ -426,6 +426,7 @@ collision_mask = 5
 script = ExtResource("1_v0iea")
 acceleration = 1900.0
 friction = 2000.0
+roll_speed = 280.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=532109296]
 position = Vector2(0, 8)
@@ -438,3 +439,4 @@ animation = &"Blocking"
 autoplay = "Idle"
 frame = 4
 frame_progress = 1.0
+metadata/_edit_lock_ = true

@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 signal died
 
-enum State{ IDLE, RUN, JUMP, FALL, CROUNCH, ROLL, ATTACK, BLOCK, HURT, DEAD}
+enum State{ IDLE, RUN, JUMP, FALL, CROUCH, ROLL, ATTACK, BLOCK, HURT, DEAD}
 
 const ATTACK_ANIMS: Array[String] = ["Attack1", "Attack2", "Attack3"]
 
@@ -55,7 +55,7 @@ func _physics_process(delta: float) -> void:
 	match state:
 		State.IDLE, State.RUN, State.JUMP, State.FALL:
 			_process_free(direction, delta)
-		State.CROUNCH:
+		State.CROUCH:
 			_process_crouch(delta)
 		State.ROLL:
 			_process_roll()
@@ -137,12 +137,12 @@ func _process_free(direction: float,  delta: float) -> void:
 			return
 		if Input.is_action_just_pressed("roll") and roll_cooldown_timer <= 0.0:
 			_change_state(State.ROLL)
-			
-		if Input.is_action_just_pressed("block"):
+			return
+		if Input.is_action_pressed("block"):
 			_change_state(State.BLOCK)
 			return
 		if Input.is_action_pressed("crouch"):
-			_change_state(State.CROUNCH)
+			_change_state(State.CROUCH)
 			return
 	_handle_jump()
 	_handle_horizontal(direction, delta)
@@ -200,7 +200,7 @@ func _change_state(new_state: State) -> void:
 			anim.play("Jump")
 		State.FALL:
 			anim.play("Fall")
-		State.CROUNCH:
+		State.CROUCH:
 			anim.play("Crouch")
 		State.ROLL:
 			anim.play("Roll")
@@ -264,3 +264,8 @@ func take_damage(amount:int , source_position: Vector2 = Vector2.ZERO) -> void:
 	velocity = Vector2 (push_dir * knockback_force.x, knockback_force.y)
 	
 	_change_state(State.HURT)
+
+func _is_attack_from_front(source_position: Vector2) ->bool:
+	var dir_to_source: int = int(signf(source_position.x - global_position.x))
+	return dir_to_source == facing
+	
