@@ -417,18 +417,6 @@ animations = [{
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_v0iea")
-speed = null
-acceleration = null
-friction = null
-jump_acceleration = null
-air_acceleration = null
-air_friction = null
-jump_velocity = null
-jump_cut_multiplier = null
-fall_gravity_multiplier = null
-max_fall_speed = null
-coyote_time = null
-jump_buffer_time = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=532109296]
 position = Vector2(0, 8)

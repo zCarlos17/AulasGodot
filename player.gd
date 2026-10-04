@@ -3,7 +3,9 @@ extends CharacterBody2D
 @export_group("Movimento")
 @export var speed: float = 290.0
 @export var acceleration: float = 1800.0        #Quao rapido ele chega na velocidade
+@export var friction: float = 2200.0
 @export var jump_acceleration: float = 2200.0   #Quao rapido para
+@export var air_acceleration: float = 1200.0    #Controle horizontal durante o ar
 @export var air_friction: float = 600.0         #Desaleração sem input
 
 @export_group("Pulo")
@@ -34,12 +36,12 @@ func _update_timers(delta: float) -> void:
 		coyote_timer = coyote_time
 	else :
 		coyote_timer -= delta
-	
 	# No *Jump_bugger* vai guardar o aperto do botao por um instante
 	if Input.is_action_just_pressed("jump"):
 		jump_buffer_timer = jump_buffer_time
 	else:
 		jump_buffer_timer -= delta
+
 func _apply_gravity(delta: float) -> void:
 	if is_on_floor():
 		return
@@ -53,9 +55,25 @@ func _apply_gravity(delta: float) -> void:
 
 
 func _handle_jump() -> void:
-	pass
+	if jump_buffer_timer > 0.0 and coyote_timer > 0.0:
+		velocity.y = jump_velocity
+		jump_buffer_timer = 0.0
+		coyote_timer = 0.0
+	
+	#Pulo variavel: soltar o pulo = pulo mais baixo
+	if Input.is_action_just_released("jump") and velocity.y < 0.0:
+		velocity.y *= jump_cut_multiplier
+	
 func _handle_horizontal(direction: float, delta: float) ->void:
-	pass
+	var accel := acceleration if is_on_floor() else air_acceleration
+	var fricc := friction if is_on_floor() else air_friction
+	
+	if direction != 0.0:
+		velocity.x =move_toward(velocity.x, direction * speed, accel * delta)
+	else:
+		velocity.x = move_toward(velocity.x, 0.0, fricc * delta)
+	
+	
 func _update_animation(direction: float) -> void:
 	if  direction != 0.0:
 		anim.flip_h = direction < 0.0
