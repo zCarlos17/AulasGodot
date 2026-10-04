@@ -211,8 +211,11 @@ animations = [{
 "name": &"Blocking",
 "speed": 5.0
 }, {
-"frames": [],
-"loop": true,
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("70_ho16k")
+}],
+"loop": false,
 "name": &"Crouch",
 "speed": 5.0
 }, {
@@ -264,7 +267,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("48_jr4hp")
 }],
-"loop": true,
+"loop": false,
 "name": &"Fall",
 "speed": 5.0
 }, {
@@ -403,6 +406,11 @@ animations = [{
 "loop": true,
 "name": &"Run",
 "speed": 10.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
 }]
 
 [node name="Player" type="CharacterBody2D" unique_id=1640374179]
@@ -417,5 +425,5 @@ shape = SubResource("CapsuleShape2D_h5cax")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=900714674]
 sprite_frames = SubResource("SpriteFrames_6t5aa")
-animation = &"Idle"
+animation = &"Fall"
 autoplay = "Idle"
