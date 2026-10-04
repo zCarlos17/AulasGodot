@@ -189,7 +189,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"BlockIdle",
-"speed": 9.0
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -207,17 +207,23 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("34_nwtn4")
 }],
-"loop": true,
+"loop": false,
 "name": &"Blocking",
-"speed": 5.0
+"speed": 12.0
 }, {
 "frames": [{
+"duration": 1.0,
+"texture": ExtResource("71_o712r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("63_iw8ov")
+}, {
 "duration": 1.0,
 "texture": ExtResource("70_ho16k")
 }],
 "loop": false,
 "name": &"Crouch",
-"speed": 5.0
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -250,9 +256,9 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("44_t1r1w")
 }],
-"loop": true,
+"loop": false,
 "name": &"DeathBlood",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -267,9 +273,9 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("48_jr4hp")
 }],
-"loop": false,
+"loop": true,
 "name": &"Fall",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -283,7 +289,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"Hurt",
-"speed": 4.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -338,7 +344,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"Jump",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -370,7 +376,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"Roll",
-"speed": 10.0
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -405,7 +411,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"Run",
-"speed": 10.0
+"speed": 12.0
 }, {
 "frames": [],
 "loop": true,
@@ -414,21 +420,12 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D" unique_id=1640374179]
+z_index = 1
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_v0iea")
-speed = null
-acceleration = null
-friction = null
-jump_acceleration = null
-air_acceleration = null
-air_friction = null
-jump_velocity = null
-jump_cut_multiplier = null
-fall_gravity_multiplier = null
-max_fall_speed = null
-coyote_time = null
-jump_buffer_time = null
+acceleration = 1900.0
+friction = 2000.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=532109296]
 position = Vector2(0, 8)
@@ -437,5 +434,7 @@ shape = SubResource("CapsuleShape2D_h5cax")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=900714674]
 sprite_frames = SubResource("SpriteFrames_6t5aa")
-animation = &"Fall"
+animation = &"Blocking"
 autoplay = "Idle"
+frame = 4
+frame_progress = 1.0

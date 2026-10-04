@@ -4,5 +4,8 @@
 
 [node name="Terrain" type="Node2D" unique_id=1720062427]
 
-[node name="Terrain" type="TileMapLayer" parent="." unique_id=883041594]
+[node name="TerrainNormal" type="TileMapLayer" parent="." unique_id=883041594]
+tile_set = ExtResource("1_g24sy")
+
+[node name="TDirecaoUnica" type="TileMapLayer" parent="." unique_id=775470894]
 tile_set = ExtResource("1_g24sy")
