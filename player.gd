@@ -18,6 +18,7 @@ const ATTACK_ANIMS: Array[String] = ["Attack1", "Attack2", "Attack3"]
 @export var friction: float = 2200.0
 @export var air_acceleration: float = 1200.0    #Controle horizontal durante o ar
 @export var air_friction: float = 600.0         #Desaleração sem input
+@export var crouch_speed: float = 100.0
 
 @export_group("Pulo")
 @export var jump_velocity: float = -400.0
@@ -182,7 +183,19 @@ func _process_free(direction: float,  delta: float) -> void:
 	_handle_horizontal(direction, delta)
 
 func _process_crouch(delta: float) -> void:
-	_stop_horizontal(delta)
+	var direction := Input.get_axis("left", "right")
+	
+	if direction!= 0.0:
+		facing = 1 if direction > 0.0 else -1
+		anim.flip_h = facing <0 
+		velocity.x = move_toward(velocity.x, direction* crouch_speed, acceleration * delta)
+	else:
+		_stop_horizontal(delta)
+	#Caso precise rolar para sair de baixo do teto
+	if Input.is_action_just_pressed("roll") and roll_cooldown_timer <= 0.0:
+		_change_state(State.ROLL)
+		return
+	
 	var wants_up: bool = not Input.is_action_pressed("crouch") or not is_on_floor()
 	if wants_up and (_can_stand() or not is_on_floor()):
 		_update_locomotion_state()

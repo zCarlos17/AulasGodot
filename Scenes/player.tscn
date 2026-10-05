@@ -427,25 +427,10 @@ z_index = 1
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_v0iea")
-speed = null
 acceleration = 1900.0
 friction = 2000.0
-air_acceleration = null
-air_friction = null
-jump_velocity = null
-jump_cut_multiplier = null
-fall_gravity_multiplier = null
-max_fall_speed = null
-coyote_time = null
-jump_buffer_time = null
 roll_speed = 280.0
-roll_cooldown = null
-max_health = null
-knockback_force = null
-attack_damage = null
 attack_active_frames = Array[Vector2i]([Vector2i(3, 3), Vector2i(3, 3), Vector2i(3, 4)])
-crouch_height_ratio = null
-roll_height_ratio = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=532109296]
 position = Vector2(0, 8)
