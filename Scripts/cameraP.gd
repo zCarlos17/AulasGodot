@@ -15,6 +15,8 @@ extends Camera2D
 func _ready() -> void:
 	if alvo:
 		global_position = alvo.global_position
+		if alvo.has_signal("respawned"):
+			alvo.respawned.connect(_on_alvo_respawned)
 	if usar_limites:
 		_aplicar_limites()
 	reset_smoothing()
@@ -24,6 +26,8 @@ func _process(delta: float) -> void:
 	if alvo:
 		global_position = global_position.lerp(alvo.global_position, suavizacao * delta)
 
+func _on_alvo_respawned()-> void:
+	global_position = alvo.global_position
 
 func _aplicar_limites() -> void:
 	var mapa := get_tree().get_first_node_in_group("limites_camera") as TileMapLayer

@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://dnb44a3v6p5ot"]
+
+[ext_resource type="Script" uid="uid://bogi8nywnib1n" path="res://Scripts/checkpoint.gd" id="1_2cwi7"]
+[ext_resource type="Texture2D" uid="uid://f0nueupivbyo" path="res://Sprites/TileSets/Angel Statue.png" id="2_e75gc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i1pff"]
+size = Vector2(15, 63)
+
+[node name="Checkpoint" type="Area2D" unique_id=939871207]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_2cwi7")
+
+[node name="AngelStatue" type="Sprite2D" parent="." unique_id=1475075687]
+position = Vector2(0, -31)
+texture = ExtResource("2_e75gc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=771933602]
+position = Vector2(0, -31)
+shape = SubResource("RectangleShape2D_i1pff")

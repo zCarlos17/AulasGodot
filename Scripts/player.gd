@@ -1,7 +1,10 @@
 extends CharacterBody2D
 
+#Player quando renasce perde a habilidade de pular corrigir!!!!!
+
 signal died
 signal health_changed(current: int, maximum: int)
+signal respawned
 
 enum State{ IDLE, RUN, JUMP, FALL, CROUCH, ROLL, ATTACK, BLOCK, HURT, DEAD}
 
@@ -102,7 +105,9 @@ func _ready() -> void:
 	anim.animation_finished.connect(_on_animation_finished)
 	anim.frame_changed.connect(_on_frame_changed)
 	_change_state(State.IDLE)
-
+	
+	GameManager.registrar_player(self)
+	
 func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis("left", "right")
 	_update_timers(delta)
@@ -395,6 +400,32 @@ func _update_blink()-> void:
 	else:
 		anim.modulate.a = 1.0
 		
+#================================================================
+#                      Morte e Respawn
+#================================================================
+func kill()-> void:
+	if state == State.DEAD:
+		return
+	health = 0
+	health_changed.emit(health, max_health)
+	_change_state(State.DEAD)
+	
+func respawn(posicao: Vector2) -> void:
+	global_position = posicao
+	velocity = Vector2.ZERO
+	health = max_health
+	health_changed.emit(health, max_health)
+	
+	combo_index = 0
+	attack_queued = false
+	coyote_time = 0.0
+	jump_buffer_timer = 0.0
+	roll_cooldown_timer = 0.0
+	invulnerable_timer = 1.0
+	
+	_change_state(State.IDLE)
+	respawned.emit()
+	
 #================================================================
 #                       Hitbox Colisao
 #================================================================
