@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://d3cq1tg3w8mlh"]
+
+[ext_resource type="Script" uid="uid://btjm4o2x4wncq" path="res://Scripts/hazard.gd" id="1_k5kej"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_usk2k"]
+size = Vector2(601, 37)
+
+[node name="FallZone" type="Area2D" unique_id=238385153]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_k5kej")
+mata_instantaneamente = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=572753871]
+position = Vector2(112, 0)
+shape = SubResource("RectangleShape2D_usk2k")
+debug_color = Color(0, 0, 0, 0.41960785)

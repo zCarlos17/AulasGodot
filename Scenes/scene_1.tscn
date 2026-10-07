@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://d3ipn024v6ehn" path="res://Scenes/terrain.tscn" id="3_tp648"]
 [ext_resource type="PackedScene" uid="uid://dtxx3ycc2gmie" path="res://Scenes/hud.tscn" id="4_0jpfo"]
 [ext_resource type="PackedScene" uid="uid://dnb44a3v6p5ot" path="res://Scenes/checkpoint.tscn" id="5_cruhp"]
+[ext_resource type="PackedScene" uid="uid://d3cq1tg3w8mlh" path="res://Scenes/fall_zone.tscn" id="6_k3vav"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tp648"]
 size = Vector2(12, 360)
@@ -40,9 +41,9 @@ tile_map_data = PackedByteArray("AACwABAAAAAPAA8AAACxABAAAAANAA4AAACyABAAAAAPAA8
 [node name="Armadilhas" parent="Terrain" index="3" unique_id=312330273]
 tile_map_data = PackedByteArray("AABBABUAAAAvABIAAABCABUAAAAvABIAAABDABUAAAAvABIAAABEABUAAAAvABIAAABIABIAAAAvABIAAGBIABMAAAAvABIAAGBIABQAAAAvABIAAGA=")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1739877105]
+[node name="LimiteMapa" type="StaticBody2D" parent="." unique_id=1739877105]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1809657609]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LimiteMapa" unique_id=1809657609]
 position = Vector2(-4, 170)
 shape = SubResource("RectangleShape2D_tp648")
 
@@ -55,4 +56,11 @@ position = Vector2(1239, 223)
 [node name="Checkpoint2" parent="." unique_id=305886722 instance=ExtResource("5_cruhp")]
 position = Vector2(3395, 143)
 
+[node name="FallZone" parent="." unique_id=238385153 instance=ExtResource("6_k3vav")]
+position = Vector2(2517, 344)
+
+[node name="CollisionShape2D" parent="FallZone" index="0" unique_id=572753871]
+position = Vector2(-66.5, -8.5)
+
 [editable path="Terrain"]
+[editable path="FallZone"]
