@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 signal died
+signal health_changed(current: int, maximum: int)
 
 enum State{ IDLE, RUN, JUMP, FALL, CROUCH, ROLL, ATTACK, BLOCK, HURT, DEAD}
 
@@ -75,6 +76,7 @@ func _ready() -> void:
 	
 	
 	health = max_health
+	health_changed.emit(health, max_health)
 	hitbox_base_x = absf(sword_hitbox.position.x)
 	sword_hitbox.monitoring = false
 	sword_hitbox.body_entered.connect(_on_sword_hit)
@@ -103,10 +105,12 @@ func _physics_process(delta: float) -> void:
 			
 	#_handle_jump()	
 	#_handle_horizontal(direction,delta)
-
 	move_and_slide()
 	if _is_locomotion():
 		_update_locomotion_state()
+		
+	if Input.is_key_pressed(KEY_H):
+		take_damage(10, global_position + Vector2(-50, 0))
 
 '''================================================================
                    Fisica Basica de Movimentação / Pulo
@@ -206,6 +210,7 @@ func _process_roll() -> void:
 		return
 	velocity.x = facing * roll_speed
 	# O final da rolagem vai ser tratado no _on_animation_finished
+	
 func _process_attack(delta: float) -> void:
 	_stop_horizontal(delta)
 	#Apertando atacar durante uum golpe guarda o proximo golpe do combo
@@ -312,6 +317,8 @@ func take_damage(amount:int , source_position: Vector2 = Vector2.ZERO) -> void:
 		return
 	
 	health -= amount
+	health = maxi(health, 0)
+	health_changed.emit(health, max_health)
 	
 	if health <= 0:
 		_change_state(State.DEAD)
@@ -324,6 +331,12 @@ func take_damage(amount:int , source_position: Vector2 = Vector2.ZERO) -> void:
 	velocity = Vector2 (push_dir * knockback_force.x, knockback_force.y)
 	
 	_change_state(State.HURT)
+
+func heal(amount: int) -> void:    #Função para poções ou itens de vida a serem implementadas
+	if state == State.DEAD:
+		return
+	health = mini( health + amount, max_health)
+	health_changed.emit(health, max_health)
 
 func _is_attack_from_front(source_position: Vector2) ->bool:
 	var dir_to_source: int = int(signf(source_position.x - global_position.x))

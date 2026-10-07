@@ -42,7 +42,5 @@ shape = SubResource("RectangleShape2D_tp648")
 
 [node name="HUD" parent="." unique_id=776662965 node_paths=PackedStringArray("player") instance=ExtResource("4_0jpfo")]
 player = NodePath("../Player")
-cor_vida = Color(0.29411766, 0.99607843, 0.12156863, 1)
-cor_rastro = Color(0.8352941, 0, 0, 1)
 
 [editable path="Terrain"]

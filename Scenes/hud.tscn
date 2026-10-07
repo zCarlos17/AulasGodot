@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dtxx3ycc2gmie"]
+
+[ext_resource type="Script" uid="uid://bk4tmfsbed8i" path="res://Scripts/hud.gd" id="1_e0onf"]
+
+[node name="HUD" type="CanvasLayer" unique_id=776662965]
+script = ExtResource("1_e0onf")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=658425328]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="BarraAtraso" type="ProgressBar" parent="MarginContainer" unique_id=769612474]
+layout_mode = 2
+
+[node name="BarraVida" type="ProgressBar" parent="MarginContainer" unique_id=716274123]
+layout_mode = 2

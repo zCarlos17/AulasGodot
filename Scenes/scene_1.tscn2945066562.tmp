@@ -21,7 +21,23 @@ margem_cima = 7
 
 [node name="Player" parent="." unique_id=1640374179 instance=ExtResource("1_23sq3")]
 position = Vector2(65, 24)
+speed = null
 acceleration = 2000.0
+air_acceleration = null
+air_friction = null
+crouch_speed = null
+jump_velocity = null
+jump_cut_multiplier = null
+fall_gravity_multiplier = null
+max_fall_speed = null
+coyote_time = null
+jump_buffer_time = null
+roll_cooldown = null
+max_health = null
+knockback_force = null
+attack_damage = null
+crouch_height_ratio = null
+roll_height_ratio = null
 
 [node name="Terrain" parent="." unique_id=1720062427 instance=ExtResource("3_tp648")]
 
@@ -42,7 +58,5 @@ shape = SubResource("RectangleShape2D_tp648")
 
 [node name="HUD" parent="." unique_id=776662965 node_paths=PackedStringArray("player") instance=ExtResource("4_0jpfo")]
 player = NodePath("../Player")
-cor_vida = Color(0.29411766, 0.99607843, 0.12156863, 1)
-cor_rastro = Color(0.8352941, 0, 0, 1)
 
 [editable path="Terrain"]
