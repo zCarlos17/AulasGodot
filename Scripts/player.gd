@@ -10,7 +10,9 @@ const ATTACK_ANIMS: Array[String] = ["Attack1", "Attack2", "Attack3"]
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var sword_hitbox: Area2D = $SwordHitbox
 @onready var body_shape: CollisionShape2D = $CollisionShape2D
+@onready var hurt_shape: CollisionShape2D = $HurtBox/CollisionShape2D
 @onready var ceiling_check: RayCast2D = $CeilingCheck
+@onready var hurt_box: Area2D = $HurtBox
 
 
 @export_group("Movimento")
@@ -36,6 +38,7 @@ const ATTACK_ANIMS: Array[String] = ["Attack1", "Attack2", "Attack3"]
 @export_group("Vida")
 @export var max_health: int = 100
 @export var knockback_force: Vector2 = Vector2(200.0 , -200.0)
+@export var invulnerability_time: float = 1.0
 
 @export_group("Ataque")
 @export var attack_damage: int = 10
@@ -49,13 +52,19 @@ const ATTACK_ANIMS: Array[String] = ["Attack1", "Attack2", "Attack3"]
 @export_range(0.3, 1.0) var crouch_height_ratio: float = 0.6 # altura da cápsula agachado (fração da altura em pé)
 @export_range(0.3, 1.0) var roll_height_ratio: float = 0.5 # altura da cápsula rolando
 
+@export_group("Perigos")
+@export var hazard_damage: int = 10
+@export var roll_avoid_hazard: bool = false
+
 var state: State = State.IDLE
 var facing: int = 1
 var health: int = 0
 
+#Timers
 var coyote_timer: float = 0.0
 var jump_buffer_timer: float = 0.0
 var roll_cooldown_timer: float = 0.0
+var invulnerable_timer: float =0.0
 
 var combo_index: int = 0
 var attack_queued: bool = false
@@ -65,21 +74,31 @@ var hit_targets:Array[Node] = []
 
 var stand_height: float =0.0
 var stand_pos_y: float = 0.0
+
+var hurt_stand_height: float =0.0
+var hurt_stand_pos_y: float =0.0
+
 func _ready() -> void:
 	#Copia propria da forma, para nao alterar o recurso compartilhado
 	body_shape.shape = body_shape.shape.duplicate()
+	hurt_shape.shape = hurt_shape.shape.duplicate()
+	
 	var capsule := body_shape.shape as CapsuleShape2D
 	stand_height = capsule.height
 	stand_pos_y = body_shape.position.y
+	
+	hurt_stand_height=_get_shape_height(hurt_shape.shape)
+	hurt_stand_pos_y= hurt_shape.position.y
 
 	_setup_ceilling_check()
 	
-	
 	health = max_health
 	health_changed.emit(health, max_health)
+	
 	hitbox_base_x = absf(sword_hitbox.position.x)
 	sword_hitbox.monitoring = false
 	sword_hitbox.body_entered.connect(_on_sword_hit)
+	
 	anim.animation_finished.connect(_on_animation_finished)
 	anim.frame_changed.connect(_on_frame_changed)
 	_change_state(State.IDLE)
@@ -106,6 +125,9 @@ func _physics_process(delta: float) -> void:
 	#_handle_jump()	
 	#_handle_horizontal(direction,delta)
 	move_and_slide()
+	_check_hazards()
+	_update_blink()
+	
 	if _is_locomotion():
 		_update_locomotion_state()
 		
@@ -127,7 +149,8 @@ func _update_timers(delta: float) -> void:
 	else:
 		jump_buffer_timer -= delta
 	roll_cooldown_timer -= delta
-
+	invulnerable_timer -= delta
+	
 func _apply_gravity(delta: float) -> void:
 	if is_on_floor():
 		return
@@ -289,6 +312,7 @@ func  _on_animation_finished() -> void:
 			else:
 				_change_state(State.CROUCH)
 		State.HURT:
+			invulnerable_timer = invulnerability_time
 			_update_locomotion_state()
 		State.ATTACK:
 			if attack_queued and combo_index < ATTACK_ANIMS.size() -1:
@@ -307,13 +331,16 @@ func  _on_animation_finished() -> void:
 '''================================================================
                        Logica de Dano
 ================================================================'''
-func take_damage(amount:int , source_position: Vector2 = Vector2.ZERO) -> void:
+func take_damage(amount:int , source_position: Vector2 = Vector2.ZERO, can_be_blocked: bool = true, ignores_roll: bool = false) -> void:
 	#Morto ou rolando (invulneravel) nao toma dano
-	if state == State.DEAD or state == State.ROLL:
+	if state == State.DEAD or state == State.HURT:
 		return
-	
+	if state == State.ROLL and  not ignores_roll:
+		return
+	if invulnerable_timer > 0.0:
+		return
 	#bloqueando ignora o dano / E se o player tentar bloquear quando ele cair em armadilha? provaavelmnte vai dar bug
-	if state == State.BLOCK:
+	if state == State.BLOCK and can_be_blocked and _is_attack_from_front(source_position):
 		return
 	
 	health -= amount
@@ -355,16 +382,45 @@ func _on_sword_hit(body: Node2D) -> void:
 	if body.has_method("take_damage"):
 		hit_targets.append(body)
 		body.take_damage(attack_damage, global_position)
-		
-'''================================================================
-                       Hitbox Colisao
-================================================================'''
-func _set_body_height(ratio: float) -> void:
-	var capsule:= body_shape.shape as CapsuleShape2D
-	var new_height: float = maxf(stand_height*ratio, capsule.radius * 2.0)
-	capsule.height = new_height
-	body_shape.position.y = stand_pos_y + (stand_height - new_height) / 2.0
 
+func _check_hazards() -> void:
+	for corpo in hurt_box.get_overlapping_bodies():
+		if corpo.is_in_group("hazard"):
+			take_damage(hazard_damage, global_position + Vector2(facing*32,0), false, not roll_avoid_hazard)
+			return
+
+func _update_blink()-> void:
+	if invulnerable_timer > 0.0 and state != State.DEAD:
+		anim.modulate.a = 0.35 if int(invulnerable_timer * 14.0) %2 == 0 else 1.0
+	else:
+		anim.modulate.a = 1.0
+		
+#================================================================
+#                       Hitbox Colisao
+#================================================================
+func _get_shape_height(forma: Shape2D) -> float:
+	if forma is CapsuleShape2D:
+		return forma.height
+	if forma is RectangleShape2D:
+		return forma.size.y
+	return 0.0
+
+func _resize_shape(shape_node: CollisionShape2D, base_height: float, base_pos_y: float, ratio: float) -> void:
+	var nova_altura: float = base_height * ratio
+	if shape_node.shape is CapsuleShape2D:
+		var capsule := shape_node.shape as CapsuleShape2D
+		nova_altura = maxf(nova_altura, capsule.radius * 2.0)
+		capsule.height = nova_altura
+	elif shape_node.shape is RectangleShape2D:
+		var retangulo:= shape_node.shape as RectangleShape2D
+		retangulo.size.y = nova_altura
+	
+	shape_node.position.y = base_pos_y + (base_height - nova_altura) / 2.0
+
+func _set_body_height(ratio: float) -> void:
+	_resize_shape(body_shape, stand_height, stand_pos_y, ratio)
+	_resize_shape(hurt_shape,hurt_stand_height, hurt_stand_pos_y, ratio)
+	
 func _update_body_shape() -> void:
 	match state:
 		State.CROUCH:

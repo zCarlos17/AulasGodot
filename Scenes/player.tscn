@@ -422,6 +422,10 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h5cax"]
 size = Vector2(38, 50)
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dj0x0"]
+radius = 11.0
+height = 38.0
+
 [node name="Player" type="CharacterBody2D" unique_id=1640374179]
 z_index = 1
 collision_layer = 2
@@ -450,3 +454,11 @@ scale = Vector2(0.99999964, 1)
 shape = SubResource("RectangleShape2D_h5cax")
 
 [node name="CeilingCheck" type="RayCast2D" parent="." unique_id=81290206]
+
+[node name="HurtBox" type="Area2D" parent="." unique_id=516518090]
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" unique_id=12089203]
+position = Vector2(0, 8)
+shape = SubResource("CapsuleShape2D_dj0x0")
+debug_color = Color(0.96862745, 0, 0.05490196, 0.16862746)
