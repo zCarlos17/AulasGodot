@@ -9,8 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://cqm6onc2d0wk7" path="res://Sprites/Enemies/Skeleton/Take Hit.png" id="5_lw4xn"]
 [ext_resource type="Texture2D" uid="uid://dcc0knw03fgem" path="res://Sprites/Enemies/Skeleton/Walk.png" id="7_clg8n"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_pxjam"]
-size = Vector2(24, 49)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_shq1q"]
+height = 53.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k4moy"]
 atlas = ExtResource("1_ks230")
@@ -185,7 +185,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_vcsoq")
 }],
-"loop": false,
+"loop": 0,
 "name": &"Attack Projectile",
 "speed": 10.0
 }, {
@@ -214,7 +214,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fqvih")
 }],
-"loop": false,
+"loop": 0,
 "name": &"Attack1",
 "speed": 10.0
 }, {
@@ -246,7 +246,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ksbdh")
 }],
-"loop": false,
+"loop": 0,
 "name": &"Attack2",
 "speed": 10.0
 }, {
@@ -263,7 +263,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_trmo5")
 }],
-"loop": false,
+"loop": 0,
 "name": &"Death",
 "speed": 9.0
 }, {
@@ -280,7 +280,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_0rxtf")
 }],
-"loop": false,
+"loop": 0,
 "name": &"Hurt",
 "speed": 8.0
 }, {
@@ -297,7 +297,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5abox")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Idle",
 "speed": 8.0
 }, {
@@ -314,7 +314,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_wmxn5")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Walk",
 "speed": 8.0
 }]
@@ -323,18 +323,20 @@ animations = [{
 radius = 139.0036
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xbfmp"]
-size = Vector2(56, 44)
+size = Vector2(77, 44)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_q1wii"]
 radius = 70.178345
 
 [node name="Skeleton" type="CharacterBody2D" unique_id=1416509871]
+collision_layer = 4
+collision_mask = 5
 script = ExtResource("1_shq1q")
 pause_at_edge = 1.2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=909865929]
-position = Vector2(4, 0.5)
-shape = SubResource("RectangleShape2D_pxjam")
+position = Vector2(6, 0)
+shape = SubResource("CapsuleShape2D_shq1q")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=156425129]
 sprite_frames = SubResource("SpriteFrames_v8sxu")
@@ -349,7 +351,7 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectedRange" unique_id=1872464576]
-position = Vector2(11, -17)
+position = Vector2(11, -10)
 shape = SubResource("CircleShape2D_shq1q")
 debug_color = Color(0, 0.6, 0, 0.41960785)
 
@@ -358,7 +360,7 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange" unique_id=1945845451]
-position = Vector2(45, -5)
+position = Vector2(34.5, -5)
 shape = SubResource("RectangleShape2D_xbfmp")
 debug_color = Color(0.94692117, 0.09118103, 0.5322068, 0.41960785)
 

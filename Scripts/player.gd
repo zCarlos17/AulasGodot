@@ -1,6 +1,8 @@
 extends CharacterBody2D
 
 #Player quando renasce perde a habilidade de pular corrigir!!!!!
+#Ataque no ar
+
 
 signal died
 signal health_changed(current: int, maximum: int)

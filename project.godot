@@ -12,7 +12,7 @@ config_version=5
 
 config/name="AulasGodot"
 run/main_scene="uid://dru20yefivho1"
-config/features=PackedStringArray("4.6", "Forward Plus")
+config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
@@ -23,7 +23,7 @@ GameManager="*uid://cq5pc05q4hqcb"
 
 window/size/viewport_width=653
 window/size/viewport_height=360
-window/size/mode=2
+window/size/mode=3
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 
