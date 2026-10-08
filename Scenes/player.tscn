@@ -412,11 +412,6 @@ animations = [{
 "loop": true,
 "name": &"Run",
 "speed": 12.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"new_animation",
-"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h5cax"]
@@ -443,7 +438,7 @@ shape = SubResource("CapsuleShape2D_h5cax")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=900714674]
 sprite_frames = SubResource("SpriteFrames_6t5aa")
-animation = &"Jump"
+animation = &"Attack2"
 autoplay = "Idle"
 
 [node name="SwordHitbox" type="Area2D" parent="." unique_id=1145274295]

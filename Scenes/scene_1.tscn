@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dtxx3ycc2gmie" path="res://Scenes/hud.tscn" id="4_0jpfo"]
 [ext_resource type="PackedScene" uid="uid://dnb44a3v6p5ot" path="res://Scenes/checkpoint.tscn" id="5_cruhp"]
 [ext_resource type="PackedScene" uid="uid://d3cq1tg3w8mlh" path="res://Scenes/fall_zone.tscn" id="6_k3vav"]
+[ext_resource type="PackedScene" uid="uid://cqdvu4pqiu4mv" path="res://Scenes/skeleton.tscn" id="7_3pxkc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tp648"]
 size = Vector2(12, 360)
@@ -38,9 +39,6 @@ tile_map_data = PackedByteArray("AAArAAcAAQABAAAAAAAsAAcAAQABAAAAAAAtAAcAAQACAAA
 [node name="Decoração 1" parent="Terrain" index="2" unique_id=1828463236]
 tile_map_data = PackedByteArray("AACwABAAAAAPAA8AAACxABAAAAANAA4AAACyABAAAAAPAA8AAAC0ABAAAAAKAAAAAAC2ABAAAAAKAAAAAAC4ABAAAAAQAA4AAAC5ABAAAAAQAA4AAAC8ABAAAAAKAAAAAAC9ABAAAAANAAkAAAC/ABAAAAANAAkAAADAABAAAAANAA4AAADBABAAAAANAA4AAADCABAAAAASAA8AAADEAAsAAAAPAAAAAADGAAoAAAASAA4AAADGAAsAAAASAA4AAADJAAgAAAAKAAgAAADKABEAAAAKAAAAAADLAAgAAAAKAAAAAADMABEAAAAKAAAAAADNAAgAAAAKAAgAAADPAAgAAAASAA8AAADQAAYAAAASAA8AAADTAAEAAAAQAAgAAADbABMAAAAQAAsAAADcABMAAAAPAAAAAADgAAwAAAAQAA4AAADhAAwAAAAQAA4AAADjAAcAAAAKAAAAAADkAAcAAAASAA8AAADlAAcAAAASAA8AAADmAAcAAAAKAAAAAADnAAsAAAAQAA4AAADnABEAAAAKAAAAAADnABIAAAAKAAAAAADpAAQAAAAKAAAAAADrAAQAAAAPAAAAAADtAAQAAAAKAAAAAADwAA4AAAAPAAAAAADxAAcAAAAQAA4AAADxAA4AAAAKAAAAAADyAA4AAAAPAAAAAADzAAcAAAAPAAAAAAA=")
 
-[node name="Armadilhas" parent="Terrain" index="3" unique_id=312330273]
-tile_map_data = PackedByteArray("AABBABUAAAAvABIAAABCABUAAAAvABIAAABDABUAAAAvABIAAABEABUAAAAvABIAAABIABIAAAAvABIAAGBIABMAAAAvABIAAGBIABQAAAAvABIAAGA=")
-
 [node name="LimiteMapa" type="StaticBody2D" parent="." unique_id=1739877105]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LimiteMapa" unique_id=1809657609]
@@ -61,6 +59,14 @@ position = Vector2(2517, 344)
 
 [node name="CollisionShape2D" parent="FallZone" index="0" unique_id=572753871]
 position = Vector2(-66.5, -8.5)
+
+[node name="Enemies" type="Node2D" parent="." unique_id=1763406203]
+
+[node name="Skeleton" parent="Enemies" unique_id=1416509871 instance=ExtResource("7_3pxkc")]
+position = Vector2(1007, 312)
+
+[node name="Skeleton2" parent="Enemies" unique_id=194094115 instance=ExtResource("7_3pxkc")]
+position = Vector2(829, 82)
 
 [editable path="Terrain"]
 [editable path="FallZone"]

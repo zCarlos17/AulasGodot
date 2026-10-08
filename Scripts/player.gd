@@ -418,7 +418,7 @@ func respawn(posicao: Vector2) -> void:
 	
 	combo_index = 0
 	attack_queued = false
-	coyote_time = 0.0
+	coyote_timer = 0.0
 	jump_buffer_timer = 0.0
 	roll_cooldown_timer = 0.0
 	invulnerable_timer = 1.0
