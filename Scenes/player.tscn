@@ -436,7 +436,7 @@ position = Vector2(0, 8)
 scale = Vector2(1.1, 1.1)
 shape = SubResource("CapsuleShape2D_h5cax")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=900714674]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=900714674 groups=["player"]]
 sprite_frames = SubResource("SpriteFrames_6t5aa")
 animation = &"Attack2"
 autoplay = "Idle"
