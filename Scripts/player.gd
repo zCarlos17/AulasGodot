@@ -1,12 +1,9 @@
 extends CharacterBody2D
 
-#Player quando renasce perde a habilidade de pular corrigir!!!!!
-#Ataque no ar
-
-
 signal died
 signal health_changed(current: int, maximum: int)
 signal respawned
+signal parried
 
 enum State{ IDLE, RUN, JUMP, FALL, CROUCH, ROLL, ATTACK, BLOCK, HURT, DEAD}
 
@@ -39,6 +36,11 @@ const ATTACK_ANIMS: Array[String] = ["Attack1", "Attack2", "Attack3"]
 @export_group("Rolar")
 @export var roll_speed: float = 380.0
 @export var roll_cooldown: float = 0.5
+@export var roll_buffer_time: float = 0.5
+
+@export_group("Bloqueio")
+@export var block_buffer_time: float = 0.15         # Tempo que o pulo fica "guardado"
+@export var parry_window: float = 0.15
 
 @export_group("Vida")
 @export var max_health: int = 100
@@ -60,7 +62,7 @@ const ATTACK_ANIMS: Array[String] = ["Attack1", "Attack2", "Attack3"]
 @export_group("Perigos")
 @export var hazard_damage: int = 10
 @export var roll_avoid_hazard: bool = false
-
+#Variaveis
 var state: State = State.IDLE
 var facing: int = 1
 var health: int = 0
@@ -70,19 +72,23 @@ var coyote_timer: float = 0.0
 var jump_buffer_timer: float = 0.0
 var roll_cooldown_timer: float = 0.0
 var invulnerable_timer: float =0.0
+var roll_buffer_timer: float = 0.0
+var block_buffer_timer: float = 0.0
+var parry_timer: float = 0.0
 
 var combo_index: int = 0
 var attack_queued: bool = false
+var attack_from_block: bool = false
 
 var hitbox_base_x: float = 0.0
 var hit_targets:Array[Node] = []
 
+#Altura
 var stand_height: float =0.0
 var stand_pos_y: float = 0.0
-
 var hurt_stand_height: float =0.0
 var hurt_stand_pos_y: float =0.0
-
+#======================================================
 func _ready() -> void:
 	#Copia propria da forma, para nao alterar o recurso compartilhado
 	body_shape.shape = body_shape.shape.duplicate()
@@ -129,13 +135,14 @@ func _physics_process(delta: float) -> void:
 		State.HURT, State.DEAD:
 			_process_stunned(delta)
 
+	move_and_slide()
+	_check_hazards()
+	_update_blink()
+
 	if state == State.ATTACK and sword_hitbox.monitoring:
 		for body in sword_hitbox.get_overlapping_bodies():
 			_on_sword_hit(body)
 
-	move_and_slide()
-	_check_hazards()
-	_update_blink()
 	
 	if _is_locomotion():
 		_update_locomotion_state()
@@ -155,9 +162,21 @@ func _update_timers(delta: float) -> void:
 		jump_buffer_timer = jump_buffer_time
 	else:
 		jump_buffer_timer -= delta
+
+	if Input.is_action_just_pressed("roll"):
+		roll_buffer_timer = roll_buffer_time
+	else:
+		jump_buffer_timer -= delta
+
+	if Input.is_action_just_pressed("block"):
+		block_buffer_timer = block_buffer_time
+	else:
+		block_buffer_timer -= delta
+		
 	roll_cooldown_timer -= delta
 	invulnerable_timer -= delta
-	
+	parry_timer -= delta
+
 func _apply_gravity(delta: float) -> void:
 	if is_on_floor():
 		return
@@ -197,18 +216,24 @@ func _process_free(direction: float,  delta: float) -> void:
 	if  direction != 0.0:
 		facing = 1 if direction > 0.0 else -1
 		anim.flip_h = facing < 0
+	if Input.is_action_just_pressed("attack"):
+		combo_index = 0
+		_change_state(State.ATTACK)
+		return
 
 	if is_on_floor():	#Ações que valem somente no chao
-		if Input.is_action_just_pressed("attack"):
-			combo_index = 0
-			_change_state(State.ATTACK)
-			return
-		if Input.is_action_just_pressed("roll") and roll_cooldown_timer <= 0.0:
+		if _can_start_roll():
 			_change_state(State.ROLL)
 			return
+			
 		if Input.is_action_pressed("block"):
+			#Apertou agora ( ou há pouco, pelo buffer) sera ativada a janela de parry
+			if block_buffer_timer > 0.0:
+				parry_timer = parry_window
+				block_buffer_timer = 0.0
 			_change_state(State.BLOCK)
 			return
+			
 		if Input.is_action_pressed("crouch"):
 			_change_state(State.CROUCH)
 			return
@@ -248,12 +273,26 @@ func _process_attack(delta: float) -> void:
 
 func _process_block(delta: float) -> void:
 	_stop_horizontal(delta)
+	#Segurando bloqueio, a direção pressionada vira a guarda(sem se movimentar)
+	var direction:= Input.get_axis("left","right")
+	if direction != 0.0:
+		facing = 1 if direction > 0.0 else -1
+		anim.flip_h = facing < 0
+	if Input.is_action_just_pressed("attack") and is_on_floor():
+		combo_index = 0
+		attack_from_block = true
+		_change_state(State.ATTACK)
+		return
+	
 	if not Input.is_action_pressed("block") or not is_on_floor():
 			_update_locomotion_state()
 
 func _process_stunned(delta: float) -> void:
 	# Usado em HURT e DEAD desliza ate parar
 	_stop_horizontal(delta)
+	
+func _can_start_roll() -> bool:
+	return roll_buffer_timer > 0.0 and roll_cooldown_timer <= 0.0 and is_on_floor()
 #endregion
 
 #region                       Troca de Estados
@@ -291,6 +330,8 @@ func _change_state(new_state: State) -> void:
 		State.ROLL:
 			anim.play("Roll")
 			roll_cooldown_timer = roll_cooldown
+			roll_buffer_timer = 0.0
+			attack_from_block = false
 			velocity.x = facing * roll_speed
 		State.ATTACK:
 			attack_queued = false
@@ -302,10 +343,12 @@ func _change_state(new_state: State) -> void:
 		State.HURT:
 			combo_index = 0
 			attack_queued = false
+			attack_from_block = false
 			anim.play("Hurt")
 		State.DEAD:
 			combo_index=0
 			attack_queued = false
+			attack_from_block = false
 			anim.play("DeathBlood")
 
 func  _on_animation_finished() -> void:
@@ -316,20 +359,31 @@ func  _on_animation_finished() -> void:
 				_update_locomotion_state()
 			else:
 				_change_state(State.CROUCH)
+
 		State.HURT:
 			invulnerable_timer = invulnerability_time
 			_update_locomotion_state()
+
 		State.ATTACK:
 			if attack_queued and combo_index < ATTACK_ANIMS.size() -1:
 				combo_index += 1
 				_change_state(State.ATTACK)
+			elif attack_from_block and Input.is_action_just_pressed("block") and is_on_floor():
+				attack_from_block = false
+				combo_index = 0
+				parry_timer = 0.0
+				_change_state(State.BLOCK)
+				anim.play("BlockIdle")
 			else:
+				attack_from_block = false
 				combo_index = 0
 				_update_locomotion_state()
+
 		State.BLOCK:
 			#Terminando de levantar o escudo, ele fica na posição de guarda
 			if anim.animation == "Blocking":
 				anim.play("BlockIdle")
+
 		State.DEAD:
 			died.emit()
 #endregion
@@ -345,6 +399,8 @@ func take_damage(amount:int , source_position: Vector2 = Vector2.ZERO, can_be_bl
 		return
 	#bloqueando ignora o dano / E se o player tentar bloquear quando ele cair em armadilha? provaavelmnte vai dar bug
 	if state == State.BLOCK and can_be_blocked and _is_attack_from_front(source_position):
+		if parry_timer> 0.0:
+			_on_parry()
 		return
 	
 	health -= amount
@@ -363,6 +419,13 @@ func take_damage(amount:int , source_position: Vector2 = Vector2.ZERO, can_be_bl
 	
 	_change_state(State.HURT)
 
+func _on_parry() -> void:
+	parry_timer = 0.0
+	parried.emit()
+	anim.self_modulate= Color(1.8 , 1.8, 1.8)
+	var t := create_tween()
+	t.tween_property(anim, "self_modulate", Color.WHITE, 0.2)
+	
 func heal(amount: int) -> void:    #Função para poções ou itens de vida a serem implementadas
 	if state == State.DEAD:
 		return
@@ -416,11 +479,15 @@ func respawn(posicao: Vector2) -> void:
 	
 	combo_index = 0
 	attack_queued = false
+	attack_from_block = false
 	coyote_timer = 0.0
 	jump_buffer_timer = 0.0
 	roll_cooldown_timer = 0.0
+	roll_buffer_timer = 0.0
+	block_buffer_time= 0.0
+	parry_timer = 0.0
 	invulnerable_timer = 1.0
-	
+
 	_change_state(State.IDLE)
 	respawned.emit()
 #endregion
@@ -435,6 +502,7 @@ func _get_shape_height(forma: Shape2D) -> float:
 
 func _resize_shape(shape_node: CollisionShape2D, base_height: float, base_pos_y: float, ratio: float) -> void:
 	var nova_altura: float = base_height * ratio
+
 	if shape_node.shape is CapsuleShape2D:
 		var capsule := shape_node.shape as CapsuleShape2D
 		nova_altura = maxf(nova_altura, capsule.radius * 2.0)

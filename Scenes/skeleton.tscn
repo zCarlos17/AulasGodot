@@ -349,6 +349,7 @@ knockback_force = null
 corpse_time = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=909865929]
+visible = false
 position = Vector2(6, 0)
 shape = SubResource("CapsuleShape2D_shq1q")
 
@@ -356,11 +357,13 @@ shape = SubResource("CapsuleShape2D_shq1q")
 sprite_frames = SubResource("SpriteFrames_v8sxu")
 animation = &"Walk"
 autoplay = "Idle"
+frame_progress = 0.5265651
 
 [node name="LedgeCheck" type="RayCast2D" parent="." unique_id=1113965058]
 position = Vector2(17, 0)
 
 [node name="DetectedRange" type="Area2D" parent="." unique_id=2134553655]
+visible = false
 collision_layer = 0
 collision_mask = 2
 
@@ -370,6 +373,7 @@ shape = SubResource("CircleShape2D_shq1q")
 debug_color = Color(0, 0.6, 0, 0.41960785)
 
 [node name="AttackRange" type="Area2D" parent="." unique_id=2087310336]
+visible = false
 collision_layer = 0
 collision_mask = 2
 
@@ -379,6 +383,7 @@ shape = SubResource("RectangleShape2D_xbfmp")
 debug_color = Color(0.94692117, 0.09118103, 0.5322068, 0.41960785)
 
 [node name="AttackHitbox" type="Area2D" parent="." unique_id=915643445]
+visible = false
 collision_layer = 0
 collision_mask = 2
 

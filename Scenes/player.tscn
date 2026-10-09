@@ -432,16 +432,19 @@ roll_cooldown = 0.4
 attack_active_frames = Array[Vector2i]([Vector2i(3, 3), Vector2i(3, 3), Vector2i(3, 4)])
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=532109296]
+visible = false
 position = Vector2(0, 8)
 scale = Vector2(1.1, 1.1)
 shape = SubResource("CapsuleShape2D_h5cax")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=900714674 groups=["player"]]
 sprite_frames = SubResource("SpriteFrames_6t5aa")
-animation = &"Attack2"
+animation = &"Run"
 autoplay = "Idle"
+frame_progress = 0.90295255
 
 [node name="SwordHitbox" type="Area2D" parent="." unique_id=1145274295]
+visible = false
 position = Vector2(30.000002, -1)
 collision_mask = 4
 
@@ -450,8 +453,10 @@ scale = Vector2(0.99999964, 1)
 shape = SubResource("RectangleShape2D_h5cax")
 
 [node name="CeilingCheck" type="RayCast2D" parent="." unique_id=81290206]
+visible = false
 
 [node name="HurtBox" type="Area2D" parent="." unique_id=516518090]
+visible = false
 collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" unique_id=12089203]
