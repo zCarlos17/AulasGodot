@@ -128,9 +128,11 @@ func _physics_process(delta: float) -> void:
 			_process_block(delta)
 		State.HURT, State.DEAD:
 			_process_stunned(delta)
-			
-	#_handle_jump()	
-	#_handle_horizontal(direction,delta)
+
+	if state == State.ATTACK and sword_hitbox.monitoring:
+		for body in sword_hitbox.get_overlapping_bodies():
+			_on_sword_hit(body)
+
 	move_and_slide()
 	_check_hazards()
 	_update_blink()
@@ -141,9 +143,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_key_pressed(KEY_H):
 		take_damage(10, global_position + Vector2(-50, 0))
 
-'''================================================================
-                   Fisica Basica de Movimentação / Pulo
-================================================================'''
+#region                   Fisica Basica de Movimentação / Pulo
 func _update_timers(delta: float) -> void:
 	#No *Coyote_time* sera renovada cada vez q tocar no chao, ssendo gasta no ar
 	if is_on_floor():
@@ -189,10 +189,9 @@ func _handle_horizontal(direction: float, delta: float) ->void:
 	
 func _stop_horizontal(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, 0.0, friction*delta)
+#endregion
 
-'''================================================================
-                   Lógica de cada Estado
-================================================================'''
+#region                   Lógica de cada Estado
 func _process_free(direction: float,  delta: float) -> void:
 	#Direção do player
 	if  direction != 0.0:
@@ -255,10 +254,9 @@ func _process_block(delta: float) -> void:
 func _process_stunned(delta: float) -> void:
 	# Usado em HURT e DEAD desliza ate parar
 	_stop_horizontal(delta)
+#endregion
 
-'''================================================================
-                       Troca de Estados
-================================================================'''
+#region                       Troca de Estados
 func _is_locomotion() -> bool:
 	return state in [State.IDLE, State.RUN, State.JUMP, State.FALL]
 
@@ -334,10 +332,9 @@ func  _on_animation_finished() -> void:
 				anim.play("BlockIdle")
 		State.DEAD:
 			died.emit()
+#endregion
 
-'''================================================================
-                       Logica de Dano
-================================================================'''
+#region                       Logica de Dano
 func take_damage(amount:int , source_position: Vector2 = Vector2.ZERO, can_be_blocked: bool = true, ignores_roll: bool = false) -> void:
 	#Morto ou rolando (invulneravel) nao toma dano
 	if state == State.DEAD or state == State.HURT:
@@ -401,10 +398,9 @@ func _update_blink()-> void:
 		anim.modulate.a = 0.35 if int(invulnerable_timer * 14.0) %2 == 0 else 1.0
 	else:
 		anim.modulate.a = 1.0
-		
-#================================================================
-#                      Morte e Respawn
-#================================================================
+#endregion
+
+#region                      Morte e Respawn
 func kill()-> void:
 	if state == State.DEAD:
 		return
@@ -427,10 +423,9 @@ func respawn(posicao: Vector2) -> void:
 	
 	_change_state(State.IDLE)
 	respawned.emit()
-	
-#================================================================
-#                       Hitbox Colisao
-#================================================================
+#endregion
+
+#region Hitbox Colisao
 func _get_shape_height(forma: Shape2D) -> float:
 	if forma is CapsuleShape2D:
 		return forma.height
@@ -480,3 +475,4 @@ func _setup_ceilling_check() -> void:
 	ceiling_check.position = Vector2(body_shape.position.x, feet_y - min_height)
 	ceiling_check.target_position = Vector2(0.0, -(stand_height - min_height))
 	ceiling_check.collision_mask = 1  #Terrain
+#endregion
