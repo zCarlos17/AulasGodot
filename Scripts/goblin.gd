@@ -3,7 +3,7 @@ extends CharacterBody2D
 signal died
 
 enum State { PATROL, PAUSE, CHASE, ATTACK, HURT, DEAD }
-enum AttackPhase { HOP, WAIT, DASH }
+enum AttackPhase { HOP, WAIT, DASH, STOP }
 
 const ATTACK_ANIMS: Array[String] = ["Attack1", "Attack2"]
 
@@ -11,6 +11,16 @@ const ATTACK_ANIMS: Array[String] = ["Attack1", "Attack2"]
 const ATTACK_HITBOX := {
 	"Attack1": {"pos": Vector2(29.0, 11.0), "size": Vector2(44.0, 30.0)},
 	"Attack2": {"pos": Vector2(40.0, -8.0), "size": Vector2(80.0, 30.0)},
+}
+# Ajuste de posição por frame: { "Attack2": { frame: Vector2(x, y) } }
+const FRAME_OFFSETS := {
+	"Attack2": {
+		0:Vector2(-21.0, 0.0),
+		1:Vector2(-21.0, 0.0),
+		2:Vector2(-40.0, 0.0),
+		3: Vector2(-40.0, 0.0),
+		4: Vector2(-10.0, 0.0),
+	},
 }
 
 @export_group("Movimentação")
@@ -40,6 +50,8 @@ const ATTACK_HITBOX := {
 @export var attack_cooldown: float = 1.2
 @export var attack_active_frames: Vector2i = Vector2i(6, 7)
 @export var attack_spacing: float = 10.0   # folga para o player poder reagir antes do golpe
+@export var dash_end_frame: int = 5          # último frame do avanço visual
+@export var wall_stop_distance: float = 30.0  # distância da parede em que o avanço para (ajuste medindo o alcance da arma)
 
 @export_group("Vida")
 @export var max_health: int = 30
@@ -58,8 +70,10 @@ const ATTACK_HITBOX := {
 
 var state: State = State.PATROL
 var attack_phase: AttackPhase = AttackPhase.HOP
+
 var health: int = 0
 var facing: int = 1
+#Timersd
 var pause_timer: float = 0.0
 var attack_cooldown_timer: float = 0.0
 var lost_sight_timer: float = 0.0
@@ -67,6 +81,8 @@ var ignore_player_timer: float = 0.0
 var reaction_timer: float = 0.0
 var hop_timer: float = 0.0
 var stuck_timer: float = 0.0
+var hurt_timer: float = 0.0
+#Posições
 var last_x: float = 0.0
 var intended_vx: float = 0.0
 var attack_range_base_x: float = 0.0
@@ -127,9 +143,14 @@ func _physics_process(delta: float) -> void:
 		State.ATTACK:
 			_attack_movement(delta)
 
-		State.HURT, State.DEAD:
+		State.HURT:
 			velocity.x = move_toward(velocity.x, 0.0, 400.0 * delta)
-
+			hurt_timer -= delta
+			if hurt_timer <= 0.0:
+				_set_state(State.CHASE if _see_player() else State.PATROL)
+		State.DEAD:
+			velocity.x = move_toward(velocity.x, 0.0, 400.0 * delta)
+	
 	intended_vx = velocity.x
 	move_and_slide()
 	if state == State.CHASE:
@@ -147,13 +168,11 @@ func _physics_process(delta: float) -> void:
 # Controla o movimento de cada golpe, em fases
 func _attack_movement(delta: float) -> void:
 	if str(anim.animation) != "Attack2":
-		# Attack1: fica parado, só freia
 		velocity.x = move_toward(velocity.x, 0.0, 800.0 * delta)
 		return
 
 	match attack_phase:
 		AttackPhase.HOP:
-			# Mantém o impulso de recuo até pousar (ignora o primeiro instante, ainda no chão)
 			hop_timer += delta
 			if hop_timer > 0.1 and is_on_floor():
 				attack_phase = AttackPhase.WAIT
@@ -162,8 +181,15 @@ func _attack_movement(delta: float) -> void:
 			if anim.frame >= dash_start_frame:
 				attack_phase = AttackPhase.DASH
 		AttackPhase.DASH:
-			velocity.x = _dash_speed()
-
+			var parede: float = _distance_to_wall()
+			var parede_perto: bool = parede >= 0.0 and parede <= wall_stop_distance
+			if is_on_wall() or parede_perto or anim.frame > dash_end_frame:
+				attack_phase = AttackPhase.STOP
+				velocity.x = 0.0
+			else:
+				velocity.x = _dash_speed()
+		AttackPhase.STOP:
+			velocity.x = move_toward(velocity.x, 0.0, 1200.0 * delta)
 
 func _start_hop() -> void:
 	var g: float = get_gravity().y
@@ -182,16 +208,6 @@ func _dash_speed() -> float:
 	var alvo_x: float = player.global_position.x - facing * dash_contact_gap
 	var distancia: float = alvo_x - global_position.x
 	var vel: float = clampf(distancia / tempo, -dash_max_speed, dash_max_speed)
-
-	# Não ultrapassa uma parede à frente
-	var distancia_parede := _distance_to_wall()
-	if distancia_parede >= 0.0:
-		var vel_max_parede: float = distancia_parede / maxf(tempo, 0.01)
-		if facing > 0:
-			vel = minf(vel, vel_max_parede)
-		else:
-			vel = maxf(vel, -vel_max_parede)
-
 	return vel
 	
 # Distância até uma parede na frente do Goblin, ou -1 se não houver
@@ -365,17 +381,34 @@ func _set_state(new_state: State) -> void:
 				_start_hop()
 		State.HURT:
 			anim.play("Take_Hit")
+			hurt_timer = _anim_duration("Take_Hit") + 0.1
 		State.DEAD:
 			anim.play("Death")
 
+# Duração total (em segundos) de uma animação do SpriteFrames
+func _anim_duration(nome: String) -> float:
+	var frames: SpriteFrames = anim.sprite_frames
+	if frames == null or not frames.has_animation(nome):
+		return 0.0
+	var fps: float = frames.get_animation_speed(nome)
+	if fps <= 0.0:
+		return 0.0
+	var total: float = 0.0
+	for i in frames.get_frame_count(nome):
+		total += frames.get_frame_duration(nome, i)
+	return total / fps
 
 func _on_animation_finished() -> void:
 	match state:
 		State.HURT, State.ATTACK:
 			_set_state(State.CHASE if _see_player() else State.PATROL)
 
+func _apply_frame_offset() -> void:
+	var tabela: Dictionary = FRAME_OFFSETS.get(str(anim.animation), {})
+	anim.offset = tabela.get(anim.frame, Vector2.ZERO)
 
 func _on_frame_changed() -> void:
+	_apply_frame_offset()
 	if state != State.ATTACK:
 		return
 	var active: bool = anim.frame >= attack_active_frames.x and anim.frame <= attack_active_frames.y

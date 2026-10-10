@@ -23,7 +23,7 @@ GameManager="*uid://cq5pc05q4hqcb"
 
 window/size/viewport_width=653
 window/size/viewport_height=360
-window/size/mode=3
+window/size/mode=2
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 

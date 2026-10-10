@@ -403,6 +403,7 @@ hop_distance = 70.0
 hop_time = 0.5
 dash_contact_gap = 18.0
 dash_max_speed = 400.0
+wall_stop_distance = 60.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=629331061]
 position = Vector2(3.7919693, 9.690586)
@@ -412,13 +413,14 @@ shape = SubResource("CapsuleShape2D_en4dd")
 sprite_frames = SubResource("SpriteFrames_2x76o")
 animation = &"Attack2"
 autoplay = "Idle"
-frame = 6
+frame = 4
 
 [node name="LedgeCheck" type="RayCast2D" parent="." unique_id=1482553824]
 position = Vector2(13.070236, 21.285759)
 target_position = Vector2(0, 16)
 
 [node name="DetectedRange" type="Area2D" parent="." unique_id=11653627]
+visible = false
 collision_layer = 0
 collision_mask = 2
 
@@ -426,6 +428,7 @@ collision_mask = 2
 shape = SubResource("CircleShape2D_q2rwq")
 
 [node name="AttackRange" type="Area2D" parent="." unique_id=1311771084]
+visible = false
 collision_layer = 0
 collision_mask = 2
 
@@ -433,6 +436,7 @@ collision_mask = 2
 shape = SubResource("CircleShape2D_bogrl")
 
 [node name="AttackHitbox" type="Area2D" parent="." unique_id=1766392724]
+visible = false
 collision_layer = 0
 collision_mask = 2
 
