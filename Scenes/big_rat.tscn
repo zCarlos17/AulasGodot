@@ -1,9 +1,11 @@
 [gd_scene format=3 uid="uid://bp87g7n1ehhiu"]
 
+[ext_resource type="Script" uid="uid://bfh2etluko21e" path="res://Scripts/big_rat.gd" id="1_2b6aw"]
 [ext_resource type="Texture2D" uid="uid://bckk48yigb7jb" path="res://Sprites/Enemies/Rat/attack_bite.png" id="1_5raqq"]
 [ext_resource type="Texture2D" uid="uid://nggkudjngupi" path="res://Sprites/Enemies/Rat/hurt.png" id="2_8yyuo"]
 [ext_resource type="Texture2D" uid="uid://b31m76ebs2xsc" path="res://Sprites/Enemies/Rat/idle.png" id="3_2b6aw"]
 [ext_resource type="Texture2D" uid="uid://dlrg0hp3srpha" path="res://Sprites/Enemies/Rat/run.png" id="4_oq2iq"]
+[ext_resource type="Script" uid="uid://c8vhrc8krcsj7" path="res://EnemyHealthBar.gd" id="5_8yyuo"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xxja1"]
 radius = 8.920994
@@ -263,7 +265,19 @@ animations = [{
 "speed": 14.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_5raqq"]
+radius = 198.75795
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2b6aw"]
+size = Vector2(34.712654, 19.066864)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8yyuo"]
+radius = 50.697594
+
 [node name="BigRat" type="CharacterBody2D" unique_id=1706926937]
+collision_layer = 4
+script = ExtResource("1_2b6aw")
+attack_cooldown = 0.25
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=828234931]
 position = Vector2(3.4658508, 0.7492218)
@@ -275,3 +289,43 @@ sprite_frames = SubResource("SpriteFrames_cik2b")
 animation = &"Attack"
 autoplay = "Idle"
 frame = 7
+
+[node name="HealthBar" type="Node2D" parent="." unique_id=912657921]
+position = Vector2(1.3928299, -22.981628)
+script = ExtResource("5_8yyuo")
+altura = 7.0
+tamanho_texto = 6
+
+[node name="LedgeCheck" type="RayCast2D" parent="." unique_id=743545113]
+position = Vector2(17, 0)
+target_position = Vector2(0.27899933, 30.246052)
+
+[node name="DetectedRange" type="Area2D" parent="." unique_id=1650968058]
+position = Vector2(-0.38449097, -3.8146973e-06)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectedRange" unique_id=1086659928]
+position = Vector2(0.064590454, 0.25239563)
+shape = SubResource("CircleShape2D_5raqq")
+debug_color = Color(0, 0.6, 0, 0.41960785)
+
+[node name="AttackRange" type="Area2D" parent="." unique_id=1091210161]
+position = Vector2(-0.38449097, -3.8146973e-06)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange" unique_id=1024741910]
+position = Vector2(32.356327, 1.2550011)
+shape = SubResource("RectangleShape2D_2b6aw")
+debug_color = Color(0.94692117, 0.09118103, 0.5322068, 0.41960785)
+
+[node name="AttackHitbox" type="Area2D" parent="." unique_id=1087824094]
+position = Vector2(-0.1388092, 0.24541855)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox" unique_id=1652547733]
+position = Vector2(-0.14260864, -0.6342964)
+shape = SubResource("CircleShape2D_8yyuo")
+debug_color = Color(0.9137255, 0, 0.039215688, 0.41960785)

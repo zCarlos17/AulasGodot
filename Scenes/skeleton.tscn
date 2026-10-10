@@ -186,7 +186,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_vcsoq")
 }],
-"loop": false,
+"loop": 0,
 "name": &"Attack Projectile",
 "speed": 10.0
 }, {
@@ -215,7 +215,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fqvih")
 }],
-"loop": false,
+"loop": 0,
 "name": &"Attack1",
 "speed": 10.0
 }, {
@@ -247,7 +247,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ksbdh")
 }],
-"loop": false,
+"loop": 0,
 "name": &"Attack2",
 "speed": 10.0
 }, {
@@ -264,7 +264,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_trmo5")
 }],
-"loop": false,
+"loop": 0,
 "name": &"Death",
 "speed": 9.0
 }, {
@@ -281,7 +281,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_0rxtf")
 }],
-"loop": false,
+"loop": 0,
 "name": &"Hurt",
 "speed": 8.0
 }, {
@@ -298,7 +298,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5abox")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Idle",
 "speed": 8.0
 }, {
@@ -315,7 +315,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_wmxn5")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Walk",
 "speed": 8.0
 }]
@@ -363,7 +363,6 @@ frame_progress = 0.5265651
 position = Vector2(17, 0)
 
 [node name="DetectedRange" type="Area2D" parent="." unique_id=2134553655]
-visible = false
 collision_layer = 0
 collision_mask = 2
 
@@ -373,7 +372,6 @@ shape = SubResource("CircleShape2D_shq1q")
 debug_color = Color(0, 0.6, 0, 0.41960785)
 
 [node name="AttackRange" type="Area2D" parent="." unique_id=2087310336]
-visible = false
 collision_layer = 0
 collision_mask = 2
 
@@ -383,7 +381,6 @@ shape = SubResource("RectangleShape2D_xbfmp")
 debug_color = Color(0.94692117, 0.09118103, 0.5322068, 0.41960785)
 
 [node name="AttackHitbox" type="Area2D" parent="." unique_id=915643445]
-visible = false
 collision_layer = 0
 collision_mask = 2
 

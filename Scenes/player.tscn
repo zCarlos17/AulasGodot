@@ -106,7 +106,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("7_o736f")
 }],
-"loop": false,
+"loop": 0,
 "name": &"Attack1",
 "speed": 12.0
 }, {
@@ -129,7 +129,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("13_142e3")
 }],
-"loop": false,
+"loop": 0,
 "name": &"Attack2",
 "speed": 10.0
 }, {
@@ -158,7 +158,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("21_hseb1")
 }],
-"loop": false,
+"loop": 0,
 "name": &"Attack3",
 "speed": 14.0
 }, {
@@ -187,7 +187,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("29_kt3hj")
 }],
-"loop": true,
+"loop": 1,
 "name": &"BlockIdle",
 "speed": 12.0
 }, {
@@ -207,7 +207,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("34_nwtn4")
 }],
-"loop": false,
+"loop": 0,
 "name": &"Blocking",
 "speed": 12.0
 }, {
@@ -221,7 +221,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("70_ho16k")
 }],
-"loop": false,
+"loop": 0,
 "name": &"Crouch",
 "speed": 12.0
 }, {
@@ -256,7 +256,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("44_t1r1w")
 }],
-"loop": false,
+"loop": 0,
 "name": &"DeathBlood",
 "speed": 10.0
 }, {
@@ -273,7 +273,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("48_jr4hp")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Fall",
 "speed": 10.0
 }, {
@@ -287,7 +287,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("51_sg72k")
 }],
-"loop": false,
+"loop": 0,
 "name": &"Hurt",
 "speed": 6.0
 }, {
@@ -316,7 +316,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("9_fd4e3")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Idle",
 "speed": 10.0
 }, {
@@ -342,7 +342,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("48_jr4hp")
 }],
-"loop": false,
+"loop": 0,
 "name": &"Jump",
 "speed": 10.0
 }, {
@@ -374,7 +374,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("71_o712r")
 }],
-"loop": false,
+"loop": 0,
 "name": &"Roll",
 "speed": 12.0
 }, {
@@ -409,7 +409,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("81_7rvty")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Run",
 "speed": 12.0
 }]
@@ -432,7 +432,6 @@ roll_cooldown = 0.4
 attack_active_frames = Array[Vector2i]([Vector2i(3, 3), Vector2i(3, 3), Vector2i(3, 4)])
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=532109296]
-visible = false
 position = Vector2(0, 8)
 scale = Vector2(1.1, 1.1)
 shape = SubResource("CapsuleShape2D_h5cax")

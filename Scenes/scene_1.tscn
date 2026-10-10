@@ -8,11 +8,13 @@
 [ext_resource type="PackedScene" uid="uid://d3cq1tg3w8mlh" path="res://Scenes/fall_zone.tscn" id="6_k3vav"]
 [ext_resource type="PackedScene" uid="uid://cqdvu4pqiu4mv" path="res://Scenes/skeleton.tscn" id="7_3pxkc"]
 [ext_resource type="PackedScene" uid="uid://bcgjy6je6pxq6" path="res://Scenes/Goblin.tscn" id="8_rxb0p"]
+[ext_resource type="PackedScene" uid="uid://bp87g7n1ehhiu" path="res://Scenes/big_rat.tscn" id="9_r5xri"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tp648"]
 size = Vector2(12, 360)
 
 [node name="Scene1" type="Node2D" unique_id=671332662]
+position = Vector2(-62.092102, -34.771584)
 metadata/_edit_vertical_guides_ = [1.0]
 metadata/_edit_horizontal_guides_ = [347.0]
 
@@ -71,7 +73,12 @@ position = Vector2(5015.5234, 47.604736)
 [node name="Goblins" type="Node2D" parent="." unique_id=359070419]
 
 [node name="CharacterBody2D" parent="Goblins" unique_id=1558665553 instance=ExtResource("8_rxb0p")]
-position = Vector2(449.6367, 93.40608)
+position = Vector2(669.1944, 131.1581)
+
+[node name="Rats" type="Node2D" parent="." unique_id=1724611973]
+
+[node name="BigRat" parent="Rats" unique_id=1706926937 instance=ExtResource("9_r5xri")]
+position = Vector2(479.19995, 137.6)
 
 [editable path="Terrain"]
 [editable path="FallZone"]
