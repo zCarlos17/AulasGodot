@@ -17,7 +17,7 @@
 size = Vector2(12, 360)
 
 [node name="Planice" type="Node2D" unique_id=671332662]
-metadata/_edit_horizontal_guides_ = [334.82098]
+metadata/_edit_horizontal_guides_ = [335.99265]
 
 [node name="CameraP" parent="." unique_id=1371694772 node_paths=PackedStringArray("alvo") instance=ExtResource("1_n8be1")]
 limit_left = 1
