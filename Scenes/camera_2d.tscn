@@ -5,3 +5,4 @@
 [node name="CameraP" type="Camera2D" unique_id=1371694772]
 limit_smoothed = true
 script = ExtResource("1_omgnx")
+margem_cima = 20

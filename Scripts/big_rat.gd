@@ -148,10 +148,7 @@ func _physics_process(delta: float) -> void:
 			_try_hit(body)
 
 	_check_stuck(delta)
-	if Engine.get_physics_frames() % 30 == 0:
-		var p := _find_player(detect_range)
-		print(name, " | estado=", State.keys()[state], " | facing=", facing, " | vx=", snappedf(velocity.x, 0.1), " | parede=", is_on_wall(), " | chao=", is_on_floor(), " | player_na_area=", p != null, " | visao=", p != null and _has_line_of_sight(p))
-
+	
 #region Perseguição
 func _chase_player(player: Node2D) -> void:
 	var dx: float = player.global_position.x - global_position.x
