@@ -1,39 +1,45 @@
 [gd_scene format=3 uid="uid://ckek3feqr7qd8"]
 
-[ext_resource type="Texture2D" uid="uid://bienhrnb352h5" path="res://Sprites/BackGround/BG1.png" id="1_ltpvv"]
-[ext_resource type="Texture2D" uid="uid://conok6ucj4e5" path="res://Sprites/BackGround/BG2.png" id="1_ufwhv"]
-[ext_resource type="Texture2D" uid="uid://b0amdbw8uq1jj" path="res://Sprites/BackGround/BG3.png" id="3_i8wyp"]
+[ext_resource type="Texture2D" uid="uid://7iqlar3p2qai" path="res://Sprites/BackGround/Normal BG/GandalfHardcore Background layers_layer 5.png" id="1_i8wyp"]
+[ext_resource type="Texture2D" uid="uid://yhn5naqbsm1v" path="res://Sprites/BackGround/Normal BG/GandalfHardcore Background layers_layer 4.png" id="2_ccxm6"]
+[ext_resource type="Texture2D" uid="uid://ig6hewrh8bxl" path="res://Sprites/BackGround/Normal BG/GandalfHardcore Background layers_layer 2.png" id="3_76efi"]
+[ext_resource type="Texture2D" uid="uid://d3hucfmrrcu1d" path="res://Sprites/BackGround/Normal BG/GandalfHardcore Background layers_layer 1.png" id="4_2w13x"]
 
 [node name="Node2D" type="Node2D" unique_id=1099854757]
+position = Vector2(6.235901, 182.39996)
 
-[node name="Ceu" type="Parallax2D" parent="." unique_id=982233936]
+[node name="Ceu" type="Parallax2D" parent="." unique_id=162856534]
 scroll_scale = Vector2(0.1, 0)
-repeat_size = Vector2(640, 0)
+repeat_size = Vector2(1024, 0)
+autoscroll = Vector2(10, 0)
+repeat_times = 20
+
+[node name="Sprite2D" type="Sprite2D" parent="Ceu" unique_id=960383532]
+texture = ExtResource("1_i8wyp")
+
+[node name="ArvoreLonge" type="Parallax2D" parent="." unique_id=1490980303]
+scroll_scale = Vector2(0.2, 1)
+repeat_size = Vector2(1024, 0)
+autoscroll = Vector2(20, 0)
+repeat_times = 20
+
+[node name="Sprite2D" type="Sprite2D" parent="ArvoreLonge" unique_id=1195289922]
+texture = ExtResource("2_ccxm6")
+
+[node name="ArvoreMedio" type="Parallax2D" parent="." unique_id=491554380]
+scroll_scale = Vector2(0.4, 1)
+repeat_size = Vector2(1024, 0)
+autoscroll = Vector2(30, 0)
+repeat_times = 20
+
+[node name="Sprite2D" type="Sprite2D" parent="ArvoreMedio" unique_id=2110919264]
+texture = ExtResource("3_76efi")
+
+[node name="ArvorePerto" type="Parallax2D" parent="." unique_id=1068978334]
+scroll_scale = Vector2(0.5, 1)
+repeat_size = Vector2(1024, 0)
 autoscroll = Vector2(40, 0)
 repeat_times = 20
 
-[node name="Sprite2D" type="Sprite2D" parent="Ceu" unique_id=1634296776]
-texture = ExtResource("1_ltpvv")
-
-[node name="Sprite2D2" type="Sprite2D" parent="Ceu" unique_id=13667240]
-position = Vector2(320, 0)
-texture = ExtResource("1_ltpvv")
-flip_h = true
-
-[node name="Nuvens" type="Parallax2D" parent="." unique_id=58315453]
-scroll_scale = Vector2(0, 0)
-repeat_size = Vector2(320, 0)
-autoscroll = Vector2(40, 0)
-repeat_times = 20
-
-[node name="Sprite2D" type="Sprite2D" parent="Nuvens" unique_id=1175228264]
-texture = ExtResource("1_ufwhv")
-
-[node name="Colinas" type="Parallax2D" parent="." unique_id=2143989986]
-scroll_scale = Vector2(0.3, 0.6)
-repeat_size = Vector2(320, 0)
-autoscroll = Vector2(40, 0)
-repeat_times = 20
-
-[node name="Sprite2D" type="Sprite2D" parent="Colinas" unique_id=1346149527]
-texture = ExtResource("3_i8wyp")
+[node name="Sprite2D" type="Sprite2D" parent="ArvorePerto" unique_id=739840839]
+texture = ExtResource("4_2w13x")
