@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dnb44a3v6p5ot"]
 
 [ext_resource type="Script" uid="uid://bogi8nywnib1n" path="res://Scripts/checkpoint.gd" id="1_2cwi7"]
-[ext_resource type="Texture2D" uid="uid://f0nueupivbyo" path="res://Sprites/TileSets/Angel Statue.png" id="2_e75gc"]
+[ext_resource type="Texture2D" uid="uid://cg4yktii2i0cw" path="res://Sprites/TileSets/Structures/Angel Statue.png" id="2_e75gc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i1pff"]
 size = Vector2(15, 63)
