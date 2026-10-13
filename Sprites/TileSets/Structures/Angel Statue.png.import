@@ -2,21 +2,22 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8gc2tm2ahi4e"
-path="res://.godot/imported/Tileset.png-1a478f130a6eee484a98ab2509ea04dc.ctex"
+uid="uid://cg4yktii2i0cw"
+path="res://.godot/imported/Angel Statue.png-c747c83aa404c7862d445f694dc590ae.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/TileSets/Tileset.png"
-dest_files=["res://.godot/imported/Tileset.png-1a478f130a6eee484a98ab2509ea04dc.ctex"]
+source_file="res://Sprites/TileSets/Structures/Angel Statue.png"
+dest_files=["res://.godot/imported/Angel Statue.png-c747c83aa404c7862d445f694dc590ae.ctex"]
 
 [params]
 
 compress/mode=0
 compress/high_quality=false
+compress/high_quality_mode=0
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
@@ -25,6 +26,8 @@ compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false
 mipmaps/limit=-1
+mipmaps/preserve_alpha_test_coverage=false
+mipmaps/alpha_test_threshold=0.5
 roughness/mode=0
 roughness/src_normal=""
 process/channel_remap/red=0

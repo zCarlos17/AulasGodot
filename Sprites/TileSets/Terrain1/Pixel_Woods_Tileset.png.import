@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ujvm1mgyanma"
-path="res://.godot/imported/old-dark-castle-interior-background.png-8d99a408d8a1330e7130ca7b76a79ec8.ctex"
+uid="uid://btb1cak6mtsbn"
+path="res://.godot/imported/Pixel_Woods_Tileset.png-3dd79e5e6a80758241bc139000ad9849.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/TileSets/Castelo1/PNG/old-dark-castle-interior-background.png"
-dest_files=["res://.godot/imported/old-dark-castle-interior-background.png-8d99a408d8a1330e7130ca7b76a79ec8.ctex"]
+source_file="res://Sprites/TileSets/Terrain1/Pixel_Woods_Tileset.png"
+dest_files=["res://.godot/imported/Pixel_Woods_Tileset.png-3dd79e5e6a80758241bc139000ad9849.ctex"]
 
 [params]
 

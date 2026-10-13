@@ -2,9 +2,10 @@ extends CharacterBody2D
 
 signal died
 
-enum State { PATROL, PAUSE, CHASE, ATTACK, HURT, DEAD }
+enum State { PATROL, PAUSE, CHASE, ATTACK, BLOCK, HURT, DEAD }
 
 const ATTACK_ANIMS: Array[String] = ["Attack1", "Attack2"]
+const BLOCK_ANIM := "Block"
 
 @export_group("Movimentação")
 @export var speed: float = 60.0
@@ -24,6 +25,11 @@ const ATTACK_ANIMS: Array[String] = ["Attack1", "Attack2"]
 @export var attack_damage: int = 10
 @export var attack_cooldown: float = 1.0
 @export var attack_active_frames: Vector2i = Vector2i(6, 7)
+
+@export_group("Escudo")
+@export_range(0.0, 1.0) var block_chance: float = 0.5  # chance de levantar o escudo a cada golpe do player
+@export var block_duration: float = 0.6                 # tempo com o escudo levantado, em segundos
+@export var block_cooldown: float = 2.0                 # tempo mínimo entre dois bloqueios
 
 @export_group("Vida")
 @export var max_health: int = 50
@@ -55,6 +61,11 @@ var attack_range_base_x: float = 0.0
 var hitbox_base_x: float = 0.0
 var hit_targets: Array[Node] = []
 
+# Escudo
+var block_timer: float = 0.0
+var block_cooldown_timer: float = 0.0
+var player_was_attacking: bool = false
+
 
 func _ready() -> void:
 	health = max_health
@@ -77,6 +88,8 @@ func _physics_process(delta: float) -> void:
 
 	attack_cooldown_timer -= delta
 	ignore_player_timer -= delta
+
+	_atualizar_escudo(delta)
 
 	match state:
 		State.PATROL:
@@ -106,6 +119,10 @@ func _physics_process(delta: float) -> void:
 				if lost_sight_timer <= 0.0:
 					_give_up()
 
+		State.BLOCK:
+			# Escudo levantado: fica parado, sem avançar
+			velocity.x = move_toward(velocity.x, 0.0, speed * 4.0 * delta)
+
 		State.ATTACK:
 			velocity.x = move_toward(velocity.x, 0.0, speed * 4.0 * delta)
 
@@ -121,6 +138,56 @@ func _physics_process(delta: float) -> void:
 			_try_hit(body)
 
 	_check_stuck(delta)
+
+
+#region Escudo
+# Bloqueio por evento: a cada golpe do player (no início do ataque) o Skeleton
+# rola uma chance. Se der certo, o escudo sobe por block_duration e depois entra em cooldown.
+func _atualizar_escudo(delta: float) -> void:
+	if state == State.DEAD:
+		return
+	block_cooldown_timer -= delta
+	var atacando: bool = _player_atacando_de_frente()
+	var comecou_agora: bool = atacando and not player_was_attacking
+	player_was_attacking = atacando
+
+	if state == State.BLOCK:
+		block_timer -= delta
+		if block_timer <= 0.0:
+			_fim_bloqueio()
+		return
+
+	var pode_bloquear: bool = state in [State.PATROL, State.PAUSE, State.CHASE]
+	if comecou_agora and pode_bloquear and block_cooldown_timer <= 0.0 and randf() < block_chance:
+		block_timer = block_duration
+		_set_state(State.BLOCK)
+
+
+func _fim_bloqueio() -> void:
+	block_cooldown_timer = block_cooldown
+	_set_state(State.CHASE if _see_player() else State.PATROL)
+
+
+func _player_atacando_de_frente() -> bool:
+	var player := _find_player(detect_range)
+	if player == null or not player.has_method("is_attacking"):
+		return false
+	if not player.is_attacking():
+		return false
+	return _is_attack_from_front(player.global_position) and _has_line_of_sight(player)
+
+
+# Mesma lógica do player: o golpe vem da frente se a origem está do lado para onde o Skeleton olha
+func _is_attack_from_front(source_position: Vector2) -> bool:
+	return int(signf(source_position.x - global_position.x)) == facing
+
+
+# Golpe bloqueado: sem dano e sem empurrão, só um flash no escudo
+func _feedback_bloqueio() -> void:
+	anim.self_modulate = Color(1.8, 1.8, 1.8)
+	var t := create_tween()
+	t.tween_property(anim, "self_modulate", Color.WHITE, 0.15)
+#endregion
 
 
 #region Perseguição
@@ -174,11 +241,12 @@ func _see_player() -> bool:
 
 
 func _find_player(area: Area2D) -> Node2D:
+	if not area.monitoring:
+		return null
 	for body in area.get_overlapping_bodies():
 		if body.is_in_group("player"):
 			return body
 	return null
-
 
 func _has_line_of_sight(player: Node2D) -> bool:
 	var origem := global_position + Vector2(0.0, eye_height)
@@ -240,6 +308,8 @@ func _set_state(new_state: State) -> void:
 			anim.play("Walk")
 		State.PAUSE:
 			anim.play("Idle")
+		State.BLOCK:
+			anim.play(BLOCK_ANIM)
 		State.ATTACK:
 			hit_targets.clear()
 			attack_cooldown_timer = attack_cooldown
@@ -278,8 +348,13 @@ func _try_hit(body: Node2D) -> void:
 
 
 #region Vida e morte
-func take_damage(amount: int, source_position: Vector2 = Vector2.ZERO, _can_be_blocked: bool = true) -> void:
+func take_damage(amount: int, source_position: Vector2 = Vector2.ZERO, can_be_blocked: bool = true) -> void:
 	if state == State.DEAD or state == State.HURT:
+		return
+
+	# Escudo levantado: golpe de frente é bloqueado, sem dano e sem empurrão
+	if state == State.BLOCK and can_be_blocked and _is_attack_from_front(source_position):
+		_feedback_bloqueio()
 		return
 
 	health = maxi(health - amount, 0)

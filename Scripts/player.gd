@@ -147,8 +147,8 @@ func _physics_process(delta: float) -> void:
 	if _is_locomotion():
 		_update_locomotion_state()
 		
-	if Input.is_key_pressed(KEY_H):
-		take_damage(10, global_position + Vector2(-50, 0))
+	#if Input.is_key_pressed(KEY_H):
+	#	take_damage(10, global_position + Vector2(-50, 0))
 
 #region                   Fisica Basica de Movimentação / Pulo
 func _update_timers(delta: float) -> void:
@@ -166,7 +166,7 @@ func _update_timers(delta: float) -> void:
 	if Input.is_action_just_pressed("roll"):
 		roll_buffer_timer = roll_buffer_time
 	else:
-		jump_buffer_timer -= delta
+		roll_buffer_timer -= delta
 
 	if Input.is_action_just_pressed("block"):
 		block_buffer_timer = block_buffer_time
@@ -266,7 +266,8 @@ func _process_roll() -> void:
 	# O final da rolagem vai ser tratado no _on_animation_finished
 	
 func _process_attack(delta: float) -> void:
-	_stop_horizontal(delta)
+	if is_on_floor():
+		_stop_horizontal(delta)
 	#Apertando atacar durante uum golpe guarda o proximo golpe do combo
 	if Input.is_action_just_pressed("attack"):
 		attack_queued = true
@@ -350,6 +351,9 @@ func _change_state(new_state: State) -> void:
 			attack_queued = false
 			attack_from_block = false
 			anim.play("DeathBlood")
+# Usado pelo Skeleton para levantar o escudo quando o player ataca de frente
+func is_attacking() -> bool:
+	return state == State.ATTACK
 
 func  _on_animation_finished() -> void:
 	match state:
@@ -484,9 +488,9 @@ func respawn(posicao: Vector2) -> void:
 	jump_buffer_timer = 0.0
 	roll_cooldown_timer = 0.0
 	roll_buffer_timer = 0.0
-	block_buffer_time= 0.0
+	block_buffer_timer= 0.0
 	parry_timer = 0.0
-	invulnerable_timer = 1.0
+	invulnerable_timer = invulnerability_time
 
 	_change_state(State.IDLE)
 	respawned.emit()

@@ -2,21 +2,22 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d4ehrjaploew8"
-path="res://.godot/imported/Tileset2.png-39e3f3d79ba340f52fd51d96e153e480.ctex"
+uid="uid://dl30hix5jkkga"
+path="res://.godot/imported/preview-old-dark-castle-interior-tileset.png-05b8a630bce5649a16ebc2c33e4c2fe9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/TileSets/Tileset2.png"
-dest_files=["res://.godot/imported/Tileset2.png-39e3f3d79ba340f52fd51d96e153e480.ctex"]
+source_file="res://Sprites/TileSets/Castelo1/preview-old-dark-castle-interior-tileset.png"
+dest_files=["res://.godot/imported/preview-old-dark-castle-interior-tileset.png-05b8a630bce5649a16ebc2c33e4c2fe9.ctex"]
 
 [params]
 
 compress/mode=0
 compress/high_quality=false
+compress/high_quality_mode=0
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
@@ -25,6 +26,8 @@ compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false
 mipmaps/limit=-1
+mipmaps/preserve_alpha_test_coverage=false
+mipmaps/alpha_test_threshold=0.5
 roughness/mode=0
 roughness/src_normal=""
 process/channel_remap/red=0

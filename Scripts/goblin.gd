@@ -303,12 +303,12 @@ func _see_player() -> bool:
 
 func _find_player(area: Area2D) -> Node2D:
 	if not area.monitoring:
-		return null  # área desligada (ex.: rato morto): não há o que procurar
+		return null
 	for body in area.get_overlapping_bodies():
 		if body.is_in_group("player"):
 			return body
 	return null
-
+	
 func _has_line_of_sight(player: Node2D) -> bool:
 	var origem := global_position + Vector2(0.0, eye_height)
 	var destino := player.global_position + Vector2(0.0, eye_height)
