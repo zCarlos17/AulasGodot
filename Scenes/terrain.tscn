@@ -4,6 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://cvgk8qwhu8jwa" path="res://Sprites/TileSets/Terrain1/Tileset2.png" id="2_62tj5"]
 [ext_resource type="Texture2D" uid="uid://c3aycdtkjw2dp" path="res://Sprites/TileSets/Terrain1/Decors.png" id="3_hvvm8"]
 [ext_resource type="Texture2D" uid="uid://btb1cak6mtsbn" path="res://Sprites/TileSets/Terrain1/Pixel_Woods_Tileset.png" id="4_0ac8p"]
+[ext_resource type="Texture2D" uid="uid://duau8j8fa674i" path="res://Sprites/TileSets/Animated Sprites/GandalfHardcore Animated Water Tiles.png" id="5_xx0be"]
+[ext_resource type="Texture2D" uid="uid://8p6vleshsvsq" path="res://Sprites/TileSets/Animated Sprites/agua_animada_tiles.png" id="6_kli7b"]
+[ext_resource type="Texture2D" uid="uid://cspyog6x2toio" path="res://Sprites/TileSets/Animated Sprites/cachoeira_quadros.png" id="7_kli7b"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pmkc2"]
 texture = ExtResource("2_62tj5")
@@ -221,6 +224,693 @@ texture = ExtResource("4_0ac8p")
 sources/0 = SubResource("TileSetAtlasSource_xx0be")
 sources/1 = SubResource("TileSetAtlasSource_kli7b")
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ph32v"]
+texture = ExtResource("5_xx0be")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+10:0/0 = 0
+11:0/0 = 0
+12:0/0 = 0
+13:0/0 = 0
+14:0/0 = 0
+15:0/0 = 0
+16:0/0 = 0
+17:0/0 = 0
+18:0/0 = 0
+19:0/0 = 0
+20:0/0 = 0
+21:0/0 = 0
+22:0/0 = 0
+23:0/0 = 0
+24:0/0 = 0
+25:0/0 = 0
+26:0/0 = 0
+27:0/0 = 0
+28:0/0 = 0
+29:0/0 = 0
+30:0/0 = 0
+31:0/0 = 0
+32:0/0 = 0
+33:0/0 = 0
+34:0/0 = 0
+35:0/0 = 0
+36:0/0 = 0
+37:0/0 = 0
+38:0/0 = 0
+39:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+10:1/0 = 0
+11:1/0 = 0
+12:1/0 = 0
+13:1/0 = 0
+14:1/0 = 0
+15:1/0 = 0
+16:1/0 = 0
+17:1/0 = 0
+18:1/0 = 0
+19:1/0 = 0
+20:1/0 = 0
+21:1/0 = 0
+22:1/0 = 0
+23:1/0 = 0
+24:1/0 = 0
+25:1/0 = 0
+26:1/0 = 0
+27:1/0 = 0
+28:1/0 = 0
+29:1/0 = 0
+30:1/0 = 0
+31:1/0 = 0
+32:1/0 = 0
+33:1/0 = 0
+34:1/0 = 0
+35:1/0 = 0
+36:1/0 = 0
+37:1/0 = 0
+38:1/0 = 0
+39:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+9:2/0 = 0
+10:2/0 = 0
+11:2/0 = 0
+12:2/0 = 0
+13:2/0 = 0
+14:2/0 = 0
+15:2/0 = 0
+16:2/0 = 0
+17:2/0 = 0
+18:2/0 = 0
+19:2/0 = 0
+20:2/0 = 0
+21:2/0 = 0
+22:2/0 = 0
+23:2/0 = 0
+24:2/0 = 0
+25:2/0 = 0
+26:2/0 = 0
+27:2/0 = 0
+28:2/0 = 0
+29:2/0 = 0
+30:2/0 = 0
+31:2/0 = 0
+32:2/0 = 0
+33:2/0 = 0
+34:2/0 = 0
+35:2/0 = 0
+36:2/0 = 0
+37:2/0 = 0
+38:2/0 = 0
+39:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+7:3/0 = 0
+8:3/0 = 0
+9:3/0 = 0
+10:3/0 = 0
+11:3/0 = 0
+12:3/0 = 0
+13:3/0 = 0
+14:3/0 = 0
+15:3/0 = 0
+16:3/0 = 0
+17:3/0 = 0
+18:3/0 = 0
+19:3/0 = 0
+20:3/0 = 0
+21:3/0 = 0
+22:3/0 = 0
+23:3/0 = 0
+24:3/0 = 0
+25:3/0 = 0
+26:3/0 = 0
+27:3/0 = 0
+28:3/0 = 0
+29:3/0 = 0
+30:3/0 = 0
+31:3/0 = 0
+32:3/0 = 0
+33:3/0 = 0
+34:3/0 = 0
+35:3/0 = 0
+36:3/0 = 0
+37:3/0 = 0
+38:3/0 = 0
+39:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+6:4/0 = 0
+7:4/0 = 0
+8:4/0 = 0
+9:4/0 = 0
+10:4/0 = 0
+11:4/0 = 0
+12:4/0 = 0
+13:4/0 = 0
+14:4/0 = 0
+15:4/0 = 0
+16:4/0 = 0
+17:4/0 = 0
+18:4/0 = 0
+19:4/0 = 0
+20:4/0 = 0
+21:4/0 = 0
+22:4/0 = 0
+23:4/0 = 0
+24:4/0 = 0
+25:4/0 = 0
+26:4/0 = 0
+27:4/0 = 0
+28:4/0 = 0
+29:4/0 = 0
+30:4/0 = 0
+31:4/0 = 0
+32:4/0 = 0
+33:4/0 = 0
+34:4/0 = 0
+35:4/0 = 0
+36:4/0 = 0
+37:4/0 = 0
+38:4/0 = 0
+39:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+8:5/0 = 0
+9:5/0 = 0
+10:5/0 = 0
+11:5/0 = 0
+12:5/0 = 0
+13:5/0 = 0
+14:5/0 = 0
+15:5/0 = 0
+16:5/0 = 0
+17:5/0 = 0
+18:5/0 = 0
+19:5/0 = 0
+20:5/0 = 0
+21:5/0 = 0
+22:5/0 = 0
+23:5/0 = 0
+24:5/0 = 0
+25:5/0 = 0
+26:5/0 = 0
+27:5/0 = 0
+28:5/0 = 0
+29:5/0 = 0
+30:5/0 = 0
+31:5/0 = 0
+32:5/0 = 0
+33:5/0 = 0
+34:5/0 = 0
+35:5/0 = 0
+36:5/0 = 0
+37:5/0 = 0
+38:5/0 = 0
+39:5/0 = 0
+1:7/animation_columns = 19
+1:7/0 = 0
+1:8/animation_columns = 19
+1:8/0 = 0
+1:9/animation_columns = 19
+1:9/0 = 0
+1:10/animation_columns = 19
+1:10/0 = 0
+0:11/animation_columns = 19
+0:11/0 = 0
+1:11/animation_columns = 19
+1:11/0 = 0
+0:12/animation_columns = 19
+0:12/0 = 0
+1:12/animation_columns = 19
+1:12/0 = 0
+0:13/animation_columns = 19
+0:13/0 = 0
+1:13/animation_columns = 19
+1:13/0 = 0
+0:14/0 = 0
+1:14/0 = 0
+2:14/0 = 0
+3:14/0 = 0
+4:14/0 = 0
+5:14/0 = 0
+6:14/0 = 0
+7:14/0 = 0
+8:14/0 = 0
+9:14/0 = 0
+10:14/0 = 0
+11:14/0 = 0
+12:14/0 = 0
+13:14/0 = 0
+14:14/0 = 0
+15:14/0 = 0
+16:14/0 = 0
+17:14/0 = 0
+18:14/0 = 0
+19:14/0 = 0
+20:14/0 = 0
+21:14/0 = 0
+22:14/0 = 0
+23:14/0 = 0
+24:14/0 = 0
+25:14/0 = 0
+26:14/0 = 0
+27:14/0 = 0
+28:14/0 = 0
+29:14/0 = 0
+30:14/0 = 0
+31:14/0 = 0
+32:14/0 = 0
+33:14/0 = 0
+34:14/0 = 0
+35:14/0 = 0
+36:14/0 = 0
+37:14/0 = 0
+38:14/0 = 0
+39:14/0 = 0
+0:15/0 = 0
+1:15/0 = 0
+2:15/0 = 0
+3:15/0 = 0
+4:15/0 = 0
+5:15/0 = 0
+6:15/0 = 0
+7:15/0 = 0
+8:15/0 = 0
+9:15/0 = 0
+10:15/0 = 0
+11:15/0 = 0
+12:15/0 = 0
+13:15/0 = 0
+14:15/0 = 0
+15:15/0 = 0
+16:15/0 = 0
+17:15/0 = 0
+18:15/0 = 0
+19:15/0 = 0
+20:15/0 = 0
+21:15/0 = 0
+22:15/0 = 0
+23:15/0 = 0
+24:15/0 = 0
+25:15/0 = 0
+26:15/0 = 0
+27:15/0 = 0
+28:15/0 = 0
+29:15/0 = 0
+30:15/0 = 0
+31:15/0 = 0
+32:15/0 = 0
+33:15/0 = 0
+34:15/0 = 0
+35:15/0 = 0
+36:15/0 = 0
+37:15/0 = 0
+38:15/0 = 0
+39:15/0 = 0
+0:16/0 = 0
+1:16/0 = 0
+2:16/0 = 0
+3:16/0 = 0
+0:17/0 = 0
+1:17/0 = 0
+2:17/0 = 0
+3:17/0 = 0
+0:18/0 = 0
+1:18/0 = 0
+0:19/0 = 0
+1:19/0 = 0
+0:20/0 = 0
+1:20/0 = 0
+2:20/0 = 0
+3:20/0 = 0
+4:20/0 = 0
+5:20/0 = 0
+6:20/0 = 0
+7:20/0 = 0
+8:20/0 = 0
+9:20/0 = 0
+10:20/0 = 0
+11:20/0 = 0
+12:20/0 = 0
+13:20/0 = 0
+14:20/0 = 0
+15:20/0 = 0
+16:20/0 = 0
+17:20/0 = 0
+18:20/0 = 0
+19:20/0 = 0
+20:20/0 = 0
+21:20/0 = 0
+22:20/0 = 0
+23:20/0 = 0
+24:20/0 = 0
+25:20/0 = 0
+26:20/0 = 0
+27:20/0 = 0
+28:20/0 = 0
+29:20/0 = 0
+30:20/0 = 0
+31:20/0 = 0
+32:20/0 = 0
+33:20/0 = 0
+34:20/0 = 0
+35:20/0 = 0
+36:20/0 = 0
+37:20/0 = 0
+38:20/0 = 0
+39:20/0 = 0
+0:21/0 = 0
+1:21/0 = 0
+2:21/0 = 0
+3:21/0 = 0
+4:21/0 = 0
+5:21/0 = 0
+6:21/0 = 0
+7:21/0 = 0
+8:21/0 = 0
+9:21/0 = 0
+10:21/0 = 0
+11:21/0 = 0
+12:21/0 = 0
+13:21/0 = 0
+14:21/0 = 0
+15:21/0 = 0
+16:21/0 = 0
+17:21/0 = 0
+18:21/0 = 0
+19:21/0 = 0
+20:21/0 = 0
+21:21/0 = 0
+22:21/0 = 0
+23:21/0 = 0
+24:21/0 = 0
+25:21/0 = 0
+26:21/0 = 0
+27:21/0 = 0
+28:21/0 = 0
+29:21/0 = 0
+30:21/0 = 0
+31:21/0 = 0
+32:21/0 = 0
+33:21/0 = 0
+34:21/0 = 0
+35:21/0 = 0
+36:21/0 = 0
+37:21/0 = 0
+38:21/0 = 0
+39:21/0 = 0
+1:6/animation_columns = 19
+1:6/0 = 0
+0:6/animation_columns = 19
+0:6/0 = 0
+0:7/animation_columns = 19
+0:7/0 = 0
+0:8/animation_columns = 19
+0:8/0 = 0
+0:9/animation_columns = 19
+0:9/0 = 0
+0:10/animation_columns = 19
+0:10/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4glq7"]
+texture = ExtResource("6_kli7b")
+0:2/0 = 0
+0:3/0 = 0
+0:0/size_in_atlas = Vector2i(1, 2)
+0:0/animation_columns = 3
+0:0/animation_speed = 6.0
+0:0/animation_frame_0/duration = 1.0
+0:0/animation_frame_1/duration = 1.0
+0:0/animation_frame_2/duration = 1.0
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 8)
+3:0/size_in_atlas = Vector2i(1, 2)
+3:0/animation_columns = 3
+3:0/animation_speed = 6.0
+3:0/animation_frame_0/duration = 1.0
+3:0/animation_frame_1/duration = 1.0
+3:0/animation_frame_2/duration = 1.0
+3:0/0 = 0
+3:0/0/texture_origin = Vector2i(0, 8)
+1:2/0 = 0
+2:2/animation_speed = 6.0
+2:2/0 = 0
+6:0/size_in_atlas = Vector2i(1, 2)
+6:0/animation_columns = 3
+6:0/animation_speed = 6.0
+6:0/animation_frame_0/duration = 1.0
+6:0/animation_frame_1/duration = 1.0
+6:0/animation_frame_2/duration = 1.0
+6:0/0 = 0
+6:0/0/texture_origin = Vector2i(0, 8)
+9:0/size_in_atlas = Vector2i(1, 2)
+9:0/animation_columns = 3
+9:0/animation_speed = 6.0
+9:0/animation_frame_0/duration = 1.0
+9:0/animation_frame_1/duration = 1.0
+9:0/animation_frame_2/duration = 1.0
+9:0/0 = 0
+9:0/0/texture_origin = Vector2i(0, 8)
+12:0/size_in_atlas = Vector2i(1, 2)
+12:0/animation_columns = 3
+12:0/animation_speed = 6.0
+12:0/animation_frame_0/duration = 1.0
+12:0/animation_frame_1/duration = 1.0
+12:0/animation_frame_2/duration = 1.0
+12:0/0 = 0
+12:0/0/texture_origin = Vector2i(0, 8)
+15:0/size_in_atlas = Vector2i(1, 2)
+15:0/animation_columns = 3
+15:0/animation_speed = 6.0
+15:0/animation_frame_0/duration = 1.0
+15:0/animation_frame_1/duration = 1.0
+15:0/animation_frame_2/duration = 1.0
+15:0/0 = 0
+15:0/0/texture_origin = Vector2i(0, 8)
+18:0/size_in_atlas = Vector2i(1, 2)
+18:0/animation_columns = 3
+18:0/animation_speed = 6.0
+18:0/animation_frame_0/duration = 1.0
+18:0/animation_frame_1/duration = 1.0
+18:0/animation_frame_2/duration = 1.0
+18:0/0 = 0
+18:0/0/texture_origin = Vector2i(0, 8)
+21:0/size_in_atlas = Vector2i(1, 2)
+21:0/animation_columns = 3
+21:0/animation_speed = 6.0
+21:0/animation_frame_0/duration = 1.0
+21:0/animation_frame_1/duration = 1.0
+21:0/animation_frame_2/duration = 1.0
+21:0/0 = 0
+21:0/0/texture_origin = Vector2i(0, 8)
+24:0/size_in_atlas = Vector2i(1, 2)
+24:0/animation_columns = 3
+24:0/animation_speed = 6.0
+24:0/animation_frame_0/duration = 1.0
+24:0/animation_frame_1/duration = 1.0
+24:0/animation_frame_2/duration = 1.0
+24:0/0 = 0
+24:0/0/texture_origin = Vector2i(0, 8)
+27:0/size_in_atlas = Vector2i(1, 2)
+27:0/animation_columns = 3
+27:0/animation_speed = 6.0
+27:0/animation_frame_0/duration = 1.0
+27:0/animation_frame_1/duration = 1.0
+27:0/animation_frame_2/duration = 1.0
+27:0/0 = 0
+27:0/0/texture_origin = Vector2i(0, 8)
+
+[sub_resource type="TileSet" id="TileSet_78u5i"]
+sources/0 = SubResource("TileSetAtlasSource_ph32v")
+sources/2 = SubResource("TileSetAtlasSource_4glq7")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ph32v"]
+atlas = ExtResource("7_kli7b")
+region = Rect2(0, 0, 32, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4glq7"]
+atlas = ExtResource("7_kli7b")
+region = Rect2(32, 0, 32, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aaxyt"]
+atlas = ExtResource("7_kli7b")
+region = Rect2(64, 0, 32, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gppgl"]
+atlas = ExtResource("7_kli7b")
+region = Rect2(96, 0, 32, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lu725"]
+atlas = ExtResource("7_kli7b")
+region = Rect2(128, 0, 32, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rgptw"]
+atlas = ExtResource("7_kli7b")
+region = Rect2(160, 0, 32, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o33xq"]
+atlas = ExtResource("7_kli7b")
+region = Rect2(192, 0, 32, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sehdd"]
+atlas = ExtResource("7_kli7b")
+region = Rect2(224, 0, 32, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gml2b"]
+atlas = ExtResource("7_kli7b")
+region = Rect2(256, 0, 32, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bp2wt"]
+atlas = ExtResource("7_kli7b")
+region = Rect2(288, 0, 32, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_15siy"]
+atlas = ExtResource("7_kli7b")
+region = Rect2(320, 0, 32, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4rn8p"]
+atlas = ExtResource("7_kli7b")
+region = Rect2(352, 0, 32, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8hd5e"]
+atlas = ExtResource("7_kli7b")
+region = Rect2(384, 0, 32, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yplex"]
+atlas = ExtResource("7_kli7b")
+region = Rect2(416, 0, 32, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7e5pg"]
+atlas = ExtResource("7_kli7b")
+region = Rect2(448, 0, 32, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ihuaq"]
+atlas = ExtResource("7_kli7b")
+region = Rect2(480, 0, 32, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lnws3"]
+atlas = ExtResource("7_kli7b")
+region = Rect2(512, 0, 32, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_elrmp"]
+atlas = ExtResource("7_kli7b")
+region = Rect2(544, 0, 32, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gsbiq"]
+atlas = ExtResource("7_kli7b")
+region = Rect2(576, 0, 32, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7miuv"]
+atlas = ExtResource("7_kli7b")
+region = Rect2(608, 0, 32, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_aaxyt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ph32v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4glq7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aaxyt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gppgl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lu725")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rgptw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o33xq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sehdd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gml2b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bp2wt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_15siy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4rn8p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8hd5e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yplex")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7e5pg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ihuaq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lnws3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_elrmp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gsbiq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7miuv")
+}],
+"loop": 1,
+"name": &"Cair",
+"speed": 14.0
+}]
+
 [node name="Terrain" type="Node2D" unique_id=1213341936]
 
 [node name="Terrenos" type="TileMapLayer" parent="." unique_id=663053619]
@@ -231,3 +921,11 @@ tile_set = SubResource("TileSet_ffpud")
 
 [node name="Decorações" type="TileMapLayer" parent="." unique_id=476224560]
 tile_set = SubResource("TileSet_v1pj0")
+
+[node name="Águas" type="TileMapLayer" parent="." unique_id=197432326]
+tile_set = SubResource("TileSet_78u5i")
+
+[node name="Cachoeira" type="AnimatedSprite2D" parent="." unique_id=1017089243]
+sprite_frames = SubResource("SpriteFrames_aaxyt")
+animation = &"Cair"
+frame_progress = 0.6281824
