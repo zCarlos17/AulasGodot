@@ -349,8 +349,20 @@ func _on_one_way_floor() -> bool:
 	var query := PhysicsRayQueryParameters2D.create(origem, destino, MASCARA_PLATAFORMA)
 	query.exclude = [self]
 	var hit := get_world_2d().direct_space_state.intersect_ray(query)
-	return not hit.is_empty() and hit.collider.is_in_group("direcao_unica")
-
+	if hit.is_empty():
+		return false
+	var corpo = hit.collider
+	if not corpo.is_in_group("direcao_unica"):
+		return false
+	if corpo is TileMapLayer:
+		# Pega a célula pela posição do impacto, um pouco para dentro do tile
+		var ponto: Vector2 = hit.position + Vector2(0.0, 2.0)
+		var coords: Vector2i = corpo.local_to_map(corpo.to_local(ponto))
+		var dados: TileData = corpo.get_cell_tile_data(coords)
+		var pode: bool = dados != null and dados.get_custom_data("pode_descer") == true
+		print("TESTE descer | coords=", coords, " pode=", pode)
+		return pode
+	return true
 # Desliga a layer da plataforma por um instante e empurra o player para baixo
 func _start_drop() -> void:
 	drop_timer = drop_time
