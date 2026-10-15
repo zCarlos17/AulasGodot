@@ -27,6 +27,7 @@ const MASCARA_PLATAFORMA := 1 << (LAYER_PLATAFORMA - 1)  # bit da layer 7
 @export var air_acceleration: float = 1200.0    #Controle horizontal durante o ar
 @export var air_friction: float = 600.0         #Desaleração sem input
 @export var crouch_speed: float = 100.0
+@export var step_height: float = 16.0  # altura máxima do degrau que o player sobe andando
 
 @export_group("Pulo")
 @export var jump_velocity: float = -400.0
@@ -127,7 +128,7 @@ func _ready() -> void:
 	_change_state(State.IDLE)
 	
 	GameManager.registrar_player(self)
-	
+	floor_snap_length = step_height
 func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis("left", "right")
 	_update_timers(delta)
@@ -146,7 +147,7 @@ func _physics_process(delta: float) -> void:
 			_process_block(delta)
 		State.HURT, State.DEAD:
 			_process_stunned(delta)
-
+	_try_step_up()
 	move_and_slide()
 	_check_hazards()
 	_update_blink()
@@ -368,6 +369,31 @@ func _start_drop() -> void:
 	drop_timer = drop_time
 	collision_mask &= ~MASCARA_PLATAFORMA
 	velocity.y = maxf(velocity.y, drop_push)
+
+#endregion
+#region                    Degrau
+#region Degraus
+# Sobe um degrau de até step_height quando o player anda contra ele
+func _try_step_up() -> void:
+	if not is_on_floor() or not _is_locomotion() or absf(velocity.x) < 1.0:
+		return
+
+	var dir: float = signf(velocity.x)
+	var frente := Vector2(dir * 2.0, 0.0)     # sonda curta na frente do player
+	var subida := Vector2(0.0, -step_height)
+	var acima := Transform2D(global_transform.x, global_transform.y, global_position + subida)
+
+	# Só age se a frente estiver bloqueada na altura atual
+	if not test_move(global_transform, frente):
+		return
+	# Precisa de espaço para subir e de caminho livre por cima do degrau
+	if test_move(global_transform, subida):
+		return
+	if test_move(acima, frente):
+		return
+
+	global_position.y -= step_height
+#endregion
 
 #endregion
 
