@@ -1936,6 +1936,9 @@ tile_set = SubResource("TileSet_byxas")
 [node name="Estrada" type="TileMapLayer" parent="." unique_id=208748043]
 tile_set = SubResource("TileSet_xabcl")
 
+[node name="Estrada2" type="TileMapLayer" parent="." unique_id=688126472]
+tile_set = SubResource("TileSet_xabcl")
+
 [node name="Decorações" type="TileMapLayer" parent="." unique_id=744415888]
 tile_set = SubResource("TileSet_sduc3")
 

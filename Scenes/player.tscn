@@ -424,6 +424,7 @@ height = 38.0
 [node name="Player" type="CharacterBody2D" unique_id=1640374179]
 z_index = 1
 collision_layer = 2
+collision_mask = 65
 script = ExtResource("1_v0iea")
 acceleration = 1900.0
 friction = 2000.0

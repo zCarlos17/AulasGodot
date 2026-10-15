@@ -68,7 +68,8 @@ texture = ExtResource("2_62tj5")
 4:5/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_ffpud"]
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 64
+physics_layer_0/collision_mask = 0
 sources/0 = SubResource("TileSetAtlasSource_pmkc2")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xx0be"]
@@ -916,7 +917,7 @@ animations = [{
 [node name="Terrenos" type="TileMapLayer" parent="." unique_id=663053619]
 tile_set = ExtResource("1_g24sy")
 
-[node name="Terrenos Direcionais" type="TileMapLayer" parent="." unique_id=605784315]
+[node name="Terrenos Direcionais" type="TileMapLayer" parent="." unique_id=605784315 groups=["direcao_unica"]]
 tile_set = SubResource("TileSet_ffpud")
 
 [node name="Decorações" type="TileMapLayer" parent="." unique_id=476224560]

@@ -8,6 +8,9 @@ signal parried
 enum State{ IDLE, RUN, JUMP, FALL, CROUCH, ROLL, ATTACK, BLOCK, HURT, DEAD}
 
 const ATTACK_ANIMS: Array[String] = ["Attack1", "Attack2", "Attack3"]
+const LAYER_PLATAFORMA := 7
+const MASCARA_PLATAFORMA := 1 << (LAYER_PLATAFORMA - 1)  # bit da layer 7
+
 
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var sword_hitbox: Area2D = $SwordHitbox
@@ -38,6 +41,11 @@ const ATTACK_ANIMS: Array[String] = ["Attack1", "Attack2", "Attack3"]
 @export var roll_cooldown: float = 0.5
 @export var roll_buffer_time: float = 0.5
 
+@export_group("Descer plataforma")
+@export var double_tap_window: float = 0.3   # tempo máximo entre os dois S
+@export var drop_time: float = 0.25          # tempo com a plataforma desligada
+@export var drop_push: float = 120.0         # empurrão para baixo ao começar a descer
+
 @export_group("Bloqueio")
 @export var block_buffer_time: float = 0.15         # Tempo que o pulo fica "guardado"
 @export var parry_window: float = 0.15
@@ -62,6 +70,7 @@ const ATTACK_ANIMS: Array[String] = ["Attack1", "Attack2", "Attack3"]
 @export_group("Perigos")
 @export var hazard_damage: int = 10
 @export var roll_avoid_hazard: bool = false
+
 #Variaveis
 var state: State = State.IDLE
 var facing: int = 1
@@ -75,10 +84,13 @@ var invulnerable_timer: float =0.0
 var roll_buffer_timer: float = 0.0
 var block_buffer_timer: float = 0.0
 var parry_timer: float = 0.0
+var crouch_tap_timer: float = 0.0
+var drop_timer: float = 0.0
 
 var combo_index: int = 0
 var attack_queued: bool = false
 var attack_from_block: bool = false
+var crouch_double_tap: bool = false
 
 var hitbox_base_x: float = 0.0
 var hit_targets:Array[Node] = []
@@ -176,6 +188,23 @@ func _update_timers(delta: float) -> void:
 	roll_cooldown_timer -= delta
 	invulnerable_timer -= delta
 	parry_timer -= delta
+	crouch_tap_timer -= delta
+	
+	# Duplo S: detecta o segundo aperto dentro da janela
+	crouch_double_tap = false
+	if Input.is_action_just_pressed("crouch"):
+		if crouch_tap_timer > 0.0:
+			crouch_double_tap = true
+			crouch_tap_timer = 0.0
+		else:
+			crouch_tap_timer = double_tap_window
+
+	# Religa a colisão da plataforma quando o tempo de queda acaba
+	if drop_timer > 0.0:
+		drop_timer -= delta
+		if drop_timer <= 0.0:
+			collision_mask |= MASCARA_PLATAFORMA
+
 
 func _apply_gravity(delta: float) -> void:
 	if is_on_floor():
@@ -235,12 +264,26 @@ func _process_free(direction: float,  delta: float) -> void:
 			return
 			
 		if Input.is_action_pressed("crouch"):
+			# Duplo S sobre plataforma de direção única: desce em vez de agachar
+			if crouch_double_tap and _on_one_way_floor():
+				crouch_double_tap = false
+				_start_drop()
+				_change_state(State.FALL)
+				return
 			_change_state(State.CROUCH)
 			return
 	_handle_jump()
 	_handle_horizontal(direction, delta)
 
 func _process_crouch(delta: float) -> void:
+	# Duplo S sobre plataforma de direção única: desce
+	if crouch_double_tap and _on_one_way_floor():
+		crouch_double_tap = false
+		_start_drop()
+		_change_state(State.FALL)
+		return
+	crouch_double_tap = false
+	
 	var direction := Input.get_axis("left", "right")
 	
 	if direction!= 0.0:
@@ -294,6 +337,26 @@ func _process_stunned(delta: float) -> void:
 	
 func _can_start_roll() -> bool:
 	return roll_buffer_timer > 0.0 and roll_cooldown_timer <= 0.0 and is_on_floor()
+#endregion
+
+#region                    Descer Plataforma
+func _on_one_way_floor() -> bool:
+	if not is_on_floor():
+		return false
+	var feet_y: float = global_position.y + stand_pos_y + stand_height / 2.0
+	var origem := Vector2(global_position.x, feet_y - 4.0)
+	var destino := Vector2(global_position.x, feet_y + 4.0)
+	var query := PhysicsRayQueryParameters2D.create(origem, destino, MASCARA_PLATAFORMA)
+	query.exclude = [self]
+	var hit := get_world_2d().direct_space_state.intersect_ray(query)
+	return not hit.is_empty() and hit.collider.is_in_group("direcao_unica")
+
+# Desliga a layer da plataforma por um instante e empurra o player para baixo
+func _start_drop() -> void:
+	drop_timer = drop_time
+	collision_mask &= ~MASCARA_PLATAFORMA
+	velocity.y = maxf(velocity.y, drop_push)
+
 #endregion
 
 #region                       Troca de Estados

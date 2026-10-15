@@ -272,6 +272,7 @@ roll={
 2d_physics/layer_4="Projectiles"
 2d_physics/layer_5="Hazards"
 2d_physics/layer_6="NPCs"
+2d_physics/layer_7="Direcao Unica"
 
 [physics]
 
